@@ -1,7 +1,8 @@
 const client = require('../client');
 
 module.exports = {
-    createMessage
+    createMessage,
+    getAllMessagesByUser
 }
 
 async function createMessage({
@@ -15,4 +16,12 @@ async function createMessage({
         RETURNING *;
     `, [sender, receiver, messageContent])
     return message
+}
+
+async function getAllMessagesByUser(userId) {
+    const { rows } = await client.query(`
+        SELECT * FROM messages
+        WHERE receiver = ${userId}
+        OR sender = ${userId};`)
+    return rows
 }

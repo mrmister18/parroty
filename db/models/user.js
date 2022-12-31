@@ -5,7 +5,9 @@ const bcrypt = require('bcryptjs');
 module.exports = {
   // add your database adapter fns here
   getAllUsers,
-  createUser
+  createUser,
+  getUserById,
+  getUserByUsername
 };
 
 async function getAllUsers() {
@@ -34,6 +36,34 @@ async function createUser({
   );
 
   delete user.password;
+
+  return user;
+}
+
+async function getUserById(id) {
+  const {
+    rows: [user],
+  } = await client.query(
+    `
+  SELECT * FROM users
+  WHERE id=$1;
+  `,
+    [id]
+  );
+
+  return user;
+}
+
+async function getUserByUsername(username) {
+  const {
+    rows: [user],
+  } = await client.query(
+    `
+  SELECT * FROM users
+  WHERE username=$1;
+  `,
+    [username]
+  );
 
   return user;
 }

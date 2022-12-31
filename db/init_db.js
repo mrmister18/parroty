@@ -4,6 +4,9 @@ const {
   Squawks,
   Messages,
   Comments,
+  Followers,
+  Parrots,
+  Likes
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -14,11 +17,13 @@ async function buildTables() {
     console.log("Beginning to drop tables...");
 
     await client.query(
-      `DROP TABLE IF EXISTS followers;
-    DROP TABLE IF EXISTS messages;
-    DROP TABLE IF EXISTS comments;
-    DROP TABLE IF EXISTS squawks;
-    DROP TABLE IF EXISTS users;`
+      `DROP TABLE IF EXISTS parrots;
+      DROP TABLE IF EXISTS likes;
+      DROP TABLE IF EXISTS followers;
+      DROP TABLE IF EXISTS messages;
+      DROP TABLE IF EXISTS comments;
+      DROP TABLE IF EXISTS squawks;
+      DROP TABLE IF EXISTS users;`
     );
 
     console.log("Finished dropping tables!");
@@ -39,8 +44,6 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
       "squawkContent" TEXT NOT NULL,
-      likes INTEGER DEFAULT 0,
-      parrots INTEGER DEFAULT 0,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     
@@ -63,8 +66,21 @@ async function buildTables() {
     CREATE TABLE followers (
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
-      follower INTEGER REFERENCES users(id)
-    )`
+      "followerId" INTEGER REFERENCES users(id)
+    );
+    
+    CREATE TABLE parrots (
+      id SERIAL PRIMARY KEY,
+      "squawkId" INTEGER REFERENCES squawks(id),
+      "userId" INTEGER REFERENCES users(id),
+      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+    
+    CREATE TABLE likes (
+      id SERIAL PRIMARY KEY,
+      "squawkId" INTEGER REFERENCES squawks(id),
+      "userId" INTEGER REFERENCES users(id)
+    );`
     );
     console.log("Finished creating tables!");
     // build tables in correct order
@@ -129,6 +145,42 @@ async function populateInitialData() {
       commentsToCreate.map(Comments.createComment)
     );
     console.log("Created comments: ", comments, "Finished creating comments!");
+
+    console.log("Starting to create followers...");
+    const followersToCreate = [
+      { userId: 1, followerId: 2 },
+      { userId: 1, followerId: 3 },
+      { userId: 2, followerId: 1 },
+      { userId: 2, followerId: 3 },
+      { userId: 3, followerId: 2 },
+      { userId: 3, followerId: 1 }
+    ];
+    const followers = await Promise.all(
+      followersToCreate.map(Followers.createFollower)
+    );
+    console.log("Created followers: ", followers, "Finished creating followers!");
+
+    console.log("Starting to create parrots...");
+    const parrotsToCreate = [
+      { userId: 1, squawkId: 2 },
+      { userId: 2, squawkId: 3 },
+      { userId: 3, squawkId: 1 },
+    ];
+    const parrots = await Promise.all(
+      parrotsToCreate.map(Parrots.createParrot)
+    );
+    console.log("Created parrots: ", parrots, "Finished creating parrots!");
+
+    console.log("Starting to create likes...");
+    const likesToCreate = [
+      { userId: 1, squawkId: 2 },
+      { userId: 2, squawkId: 3 },
+      { userId: 3, squawkId: 1 },
+    ];
+    const likes = await Promise.all(
+      likesToCreate.map(Likes.createLike)
+    );
+    console.log("Created likes: ", likes, "Finished creating likes!");
   } catch (error) {
     throw error;
   }
