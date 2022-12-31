@@ -3,6 +3,10 @@ module.exports = {
   // so that you can use them in your express server api routers
   // for example, create a users.js file for a User model
   // and User: require('./user') here
+  User: require('./user'),
+  Squawks: require('./squawks'),
+  Comments: require('./comments'),
+  Messages: require('./messages')
 };
 
 // then, in your API, you'll require the appropriate model
