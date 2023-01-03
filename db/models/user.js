@@ -51,6 +51,8 @@ async function getUserById(id) {
     [id]
   );
 
+  delete user.password;
+
   return user;
 }
 

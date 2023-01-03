@@ -2,7 +2,8 @@ const client = require('../client');
 
 module.exports = {
     createSquawk,
-    deleteSquawk
+    deleteSquawk,
+    getSquawksByUserId
 }
 
 async function createSquawk({
@@ -24,4 +25,12 @@ async function deleteSquawk(userId) {
         RETURNING *;
     `, [userId])
     return squawk
+}
+
+async function getSquawksByUserId(userId) {
+    const { rows } = await client.query(`
+        SELECT * FROM squawks
+        WHERE "userId" = $1;
+    `, [userId])
+    return rows
 }
