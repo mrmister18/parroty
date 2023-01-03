@@ -17,4 +17,7 @@ apiRouter.get('/health', (req, res, next) => {
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
 
+const squawksRouter = require("./squawks");
+apiRouter.use("/squawks", squawksRouter);
+
 module.exports = apiRouter;
