@@ -14,7 +14,8 @@ apiRouter.get('/', async (req, res, next) => {
 
 apiRouter.post('/', async (req, res, next) => {
     try {
-        const { userId, squawkContent } = req.body;
+        const { userId } = req.user.id
+        const { squawkContent } = req.body;
         const squawk = await createSquawk({userId, squawkContent})
         res.send(squawk);
     } catch (error) {
@@ -24,9 +25,12 @@ apiRouter.post('/', async (req, res, next) => {
 
 apiRouter.delete('/:squawkId', async (req, res, next) => {
     try {
-        const { squawkId } = req.body
-        const squawk = await deleteSquawk(squawkId)
-        res.send(squawk)
+        const { userId } = req.user.id
+        const { squawkId } = req.params
+        const squawk = await getSquawkById(squawkId)
+        if (squawk.userId === userId) {
+        await deleteSquawk(squawkId)}
+        res.send({message: "Squawk deleted successfully"})
     } catch (error) {
         next(error)
     }

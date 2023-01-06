@@ -20,4 +20,11 @@ apiRouter.use("/users", usersRouter);
 const squawksRouter = require("./squawks");
 apiRouter.use("/squawks", squawksRouter);
 
+apiRouter.use((error, req, res, next) => {
+  res.send({
+    error: error.error,
+    message: error.message
+  });
+});
+
 module.exports = apiRouter;

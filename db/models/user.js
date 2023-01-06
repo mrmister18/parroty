@@ -1,13 +1,18 @@
 // grab our db client connection to use with our adapters
 const client = require('../client');
 const bcrypt = require('bcryptjs');
+const { getFollowersById, getFollowersByFollowerId } = require('./followers');
+const { getSquawksByUserId } = require('./squawks');
 
 module.exports = {
   // add your database adapter fns here
   getAllUsers,
   createUser,
   getUserById,
-  getUserByUsername
+  getUserByUsername,
+  getUser,
+  deleteUser,
+  attachInfoToUsers
 };
 
 async function getAllUsers() {
@@ -51,8 +56,6 @@ async function getUserById(id) {
     [id]
   );
 
-  delete user.password;
-
   return user;
 }
 
@@ -68,4 +71,60 @@ async function getUserByUsername(username) {
   );
 
   return user;
+}
+
+async function getUser({ username, password }) {
+  try {
+    const user = await getUserByUsername(username);
+    const hashedPassword = user.password;
+
+    const isValid = await bcrypt.compare(password, hashedPassword);
+
+    if (isValid) {
+      delete user.password;
+      return user;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function deleteUser({ userId, password }) {
+  try {
+    const user = await getUserById(userId);
+    const hashedPassword = user.password;
+
+    const isValid = await bcrypt.compare(password, hashedPassword);
+
+    if (isValid) {
+      await client.query(`
+        DELETE FROM parrots
+        WHERE "userId" = ${user.id};
+        DELETE FROM likes
+        WHERE "userId" = ${user.id};
+        DELETE FROM followers
+        WHERE "userId" = ${user.id};
+        DELETE FROM messages
+        WHERE sender = ${user.id}
+        OR receiver = ${user.id};
+        DELETE FROM comments
+        WHERE "userId" = ${user.id};
+        DELETE FROM squawks
+        WHERE "userId" = ${user.id};
+        DELETE FROM users
+        WHERE id = ${user.id};
+      `)
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function attachInfoToUsers(users) {
+  for ( let i = 0; i < users.length; i++) {
+    users[i].followers = await getFollowersById(users[i].id);
+    users[i].following = await getFollowersByFollowerId(users[i].id);
+    users[i].squawks = await getSquawksByUserId(users[i].id);
+    delete users[i].password}
+      return users
 }

@@ -8,7 +8,8 @@ module.exports = {
     deleteSquawk,
     getSquawksByUserId,
     getAllSquawks,
-    attachInfoToSquawks
+    attachInfoToSquawks,
+    getSquawkById
 }
 
 async function createSquawk({
@@ -26,10 +27,8 @@ async function createSquawk({
 async function deleteSquawk(userId) {
     const { rows: [squawk] } = await client.query(`
         DELETE FROM squawks
-        WHERE userId = $1
-        RETURNING *;
+        WHERE userId = $1;
     `, [userId])
-    return squawk
 }
 
 async function getSquawksByUserId(userId) {
@@ -53,4 +52,12 @@ async function attachInfoToSquawks(squawks) {
         squawks[i].likes = await getLikesBySquawkId(squawks[i].id)
         squawks[i].parrots = await getParrotsBySquawkId(squawks[i].id)}
         return squawks
+}
+
+async function getSquawkById(id) {
+    const { rows: [squawk] } = await client.query(`
+        SELECT * FROM squawks
+        WHERE id = $1;
+    `, [id])
+    return squawk
 }

@@ -9,7 +9,14 @@ module.exports = {
   ...require('./messages'),
   ...require('./followers'),
   ...require('./parrots'),
-  ...require('./likes')
+  ...require('./likes'),
+  User: require('./user'),
+  Squawks: require('./squawks'),
+  Comments: require('./comments'),
+  Messages: require('./messages'),
+  Followers: require('./followers'),
+  Parrots: require('./parrots'),
+  Likes: require('./likes')
 };
 
 // then, in your API, you'll require the appropriate model
