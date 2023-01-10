@@ -26,10 +26,16 @@ async function createSquawk({
 
 async function deleteSquawk({userId, squawkId}) {
     await client.query(`
+        DELETE FROM likes
+        WHERE "squawkId" = ${squawkId};
+        DELETE FROM comments
+        WHERE "squawkId" = ${squawkId};
+        DELETE FROM parrots
+        WHERE "squawkId" = ${squawkId};
         DELETE FROM squawks
-        WHERE "userId" = $1
-        AND id = $2;
-    `, [userId, squawkId])
+        WHERE "userId" = ${userId}
+        AND id = ${squawkId};
+    `)
 }
 
 async function getSquawksByUserId(userId) {

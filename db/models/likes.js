@@ -23,12 +23,11 @@ async function deleteLike({
     userId,
     squawkId
 }) {
-    const { rows: [like] } = await client.query(`
+    await client.query(`
         DELETE FROM likes
         WHERE "userId" = $1 AND "squawkId" = $2
         RETURNING *;
     `, [userId, squawkId])
-    return like
 }
 
 async function getLikesBySquawkId(squawkId) {

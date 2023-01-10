@@ -2,7 +2,7 @@
 const client = require('../client');
 const bcrypt = require('bcryptjs');
 const { getFollowersById, getFollowersByFollowerId } = require('./followers');
-const { getSquawksByUserId } = require('./squawks');
+const { getSquawksByUserId, deleteSquawk } = require('./squawks');
 
 module.exports = {
   // add your database adapter fns here
@@ -104,16 +104,17 @@ async function deleteUser({ userId, password }) {
         WHERE "userId" = ${user.id};
         DELETE FROM followers
         WHERE "userId" = ${user.id};
+        OR "followerId" = ${user.id};
         DELETE FROM messages
         WHERE sender = ${user.id}
         OR receiver = ${user.id};
         DELETE FROM comments
         WHERE "userId" = ${user.id};
-        DELETE FROM squawks
-        WHERE "userId" = ${user.id};
         DELETE FROM users
         WHERE id = ${user.id};
       `)
+      const squawks = await getSquawksByUserId(user.id);
+      await Promise.all(squawks.map(deleteSquawk))
     }
   } catch (error) {
     console.error(error);
