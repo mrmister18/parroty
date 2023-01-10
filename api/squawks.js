@@ -1,4 +1,4 @@
-const { getAllSquawks, attachInfoToSquawks, createSquawk, deleteSquawk, getSquawkById, createComment, createLike, deleteLike } = require("../db");
+const { getAllSquawks, attachInfoToSquawks, createSquawk, deleteSquawk, getSquawkById, createComment, createLike, deleteLike, createParrot, deleteParrot } = require("../db");
 const { requireUser } = require("./utilities");
 
 const apiRouter = require("express").Router();
@@ -51,7 +51,7 @@ apiRouter.post('/:squawkId/like', requireUser, async (req, res, next) => {
         const like = await createLike({userId, squawkId})
         const response = {
             like: like,
-            message: "Comment successfully posted!"
+            message: "Successfully liked post!"
         }
         res.send(response);
     } catch (error) {
@@ -65,7 +65,37 @@ apiRouter.delete('/:squawkId/like', requireUser, async (req, res, next) => {
         const { squawkId } = req.params;
         await deleteLike({userId, squawkId})
         const response = {
-            message: "Comment successfully deleted!"
+            message: "Successfully unliked post!"
+        }
+        res.send(response);
+    } catch (error) {
+        next(error)
+    }
+})
+
+apiRouter.post('/:squawkId/parrot', requireUser, async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const { squawkId } = req.params;
+        const parrot = await createParrot({userId, squawkId})
+        const response = {
+            parrot: parrot,
+            message: "Successfully parroted post!"
+        }
+        res.send(response);
+    } catch (error) {
+        next(error)
+    }
+})
+
+apiRouter.delete('/:squawkId/parrot', requireUser, async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const { squawkId } = req.params;
+        const parrot = await deleteParrot({userId, squawkId})
+        const response = {
+            message: "Successfully unparroted post!",
+            parrot: parrot
         }
         res.send(response);
     } catch (error) {

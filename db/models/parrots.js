@@ -25,7 +25,8 @@ async function deleteParrot({
 }) {
     const { rows: [parrot] } = await client.query(`
         DELETE FROM parrots
-        WHERE "userId" = $1 AND "squawkId" = $2
+        WHERE "userId" = $1 
+        AND "squawkId" = $2
         RETURNING *;
     `, [userId, squawkId])
     return parrot
