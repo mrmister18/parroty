@@ -1,4 +1,5 @@
-const { getAllSquawks, attachInfoToSquawks, createSquawk, deleteSquawk } = require("../db");
+const { getAllSquawks, attachInfoToSquawks, createSquawk, deleteSquawk, getSquawkById } = require("../db");
+const { requireUser } = require("./utilities");
 
 const apiRouter = require("express").Router();
 
@@ -12,25 +13,29 @@ apiRouter.get('/', async (req, res, next) => {
     }
 })
 
-apiRouter.post('/', async (req, res, next) => {
+apiRouter.post('/', requireUser, async (req, res, next) => {
     try {
-        const { userId } = req.user.id
+        const userId = req.user.id
         const { squawkContent } = req.body;
         const squawk = await createSquawk({userId, squawkContent})
-        res.send(squawk);
+        const response = {
+            squawk: squawk,
+            message: "Squawk successfully posted!"
+        }
+        res.send(response);
     } catch (error) {
         next(error)
     }
 })
 
-apiRouter.delete('/:squawkId', async (req, res, next) => {
+apiRouter.delete('/:squawkId', requireUser, async (req, res, next) => {
     try {
-        const { userId } = req.user.id
+        const userId = req.user.id
         const { squawkId } = req.params
         const squawk = await getSquawkById(squawkId)
         if (squawk.userId === userId) {
-        await deleteSquawk(squawkId)}
-        res.send({message: "Squawk deleted successfully"})
+        const deletedSquawk = await deleteSquawk({userId, squawkId})
+        res.send({message: "Squawk deleted successfully", squawk: deletedSquawk})}
     } catch (error) {
         next(error)
     }

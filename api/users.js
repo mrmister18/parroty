@@ -1,6 +1,6 @@
 const apiRouter = require("express").Router();
 const jwt = require("jsonwebtoken");
-require('dotenv').config();
+require("dotenv").config();
 const { JWT_SECRET } = process.env;
 
 const {
@@ -13,25 +13,27 @@ const {
   getUser,
   getAllUsers,
   attachInfoToUsers,
-  deleteUser
+  deleteUser,
+  getUserByUsername
 } = require("../db");
 
-apiRouter.get('/', async (req, res, next) => {
+const { requireUser } = require('./utilities')
+
+apiRouter.get("/", async (req, res, next) => {
   try {
-    const users = await getAllUsers()
-    await attachInfoToUsers(users)
-    res.send(users)
+    const users = await getAllUsers();
+    await attachInfoToUsers(users);
+    res.send(users);
   } catch (error) {
     next(error);
   }
-})
+});
 
-apiRouter.get("/me", async (req, res, next) => {
+apiRouter.get("/me", requireUser, async (req, res, next) => {
   try {
-    if (!req.user) {throw Error("Missing jwt token")}
-    const { userId } = req.user.id;
+    const userId = req.user.id;
     const user = await getUserById(userId);
-    delete user.password
+    delete user.password;
     user.followers = await getFollowersById(userId);
     user.following = await getFollowersByFollowerId(userId);
     user.squawks = await getSquawksByUserId(userId);
@@ -42,41 +44,67 @@ apiRouter.get("/me", async (req, res, next) => {
   }
 });
 
-apiRouter.post('/register', async (req, res, next) => {
+apiRouter.post("/register", async (req, res, next) => {
   try {
-      const { username, password, name, bio } = req.body;
-      // if (await getUserByUsername(username)) {throw Error('This username already exists')}
-      const user = await createUser({username, password, name, bio})
-      const token = jwt.sign({id: user.id, username: user.username}, JWT_SECRET)
-      const response = {user: user, message: "Successfully created a new user", token: token}
-      res.send(response);
+    const { username, password, name, bio } = req.body;
+    if (await getUserByUsername(username)) {
+      throw Error("This username already exists");
+    }
+    const user = await createUser({ username, password, name, bio });
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      JWT_SECRET
+    );
+    const response = {
+      user: user,
+      message: "Successfully created a new user",
+      token: token,
+    };
+    res.send(response);
   } catch (error) {
-      next(error)
+    next(error);
   }
-})
+});
 
-apiRouter.post('/login', async (req, res, next) => {
+apiRouter.post("/login", async (req, res, next) => {
   try {
-      const { username, password } = req.body;
-      const user = await getUser({username, password})
-      if (!user) {throw Error('Invalid username or password')}
-      const token = jwt.sign({id: user.id, username: user.username}, JWT_SECRET)
-      const response = {user: user, message: "Successfully logged in", token: token}
-      res.send(response);
+    const { username, password } = req.body;
+    const user = await getUser({ username, password });
+    if (!user) {
+      throw Error("Invalid username or password");
+    }
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      JWT_SECRET
+    );
+    const response = {
+      user: user,
+      message: "Successfully logged in",
+      token: token,
+    };
+    res.send(response);
   } catch (error) {
-      next(error)
+    next(error);
   }
-})
+});
 
-apiRouter.delete('/:userId', async (req, res, next) => {
+apiRouter.delete("/:userId", requireUser, async (req, res, next) => {
   try {
-    const {password} = req.body
-    const {userId} = req.params
-    const user = await deleteUser({userId, password})
-    res.send(user)
+    const { password } = req.body;
+    const { userId } = req.params;
+    const user = await getUserById(userId);
+    if (!user) {
+      throw Error("That user does not exist");
+    }
+    const userPassword = await getUser({ userId: user.id, password });
+    if (!userPassword) {
+      throw Error("Invalid password");
+    }
+    await deleteUser({ userId, password });
+    res.send({ message: "User successfully deleted" });
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 module.exports = apiRouter;

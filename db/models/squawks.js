@@ -24,11 +24,12 @@ async function createSquawk({
     return squawk
 }
 
-async function deleteSquawk(userId) {
-    const { rows: [squawk] } = await client.query(`
+async function deleteSquawk({userId, squawkId}) {
+    await client.query(`
         DELETE FROM squawks
-        WHERE userId = $1;
-    `, [userId])
+        WHERE "userId" = $1
+        AND id = $2;
+    `, [userId, squawkId])
 }
 
 async function getSquawksByUserId(userId) {
