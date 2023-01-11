@@ -14,7 +14,9 @@ const {
   getAllUsers,
   attachInfoToUsers,
   deleteUser,
-  getUserByUsername
+  getUserByUsername,
+  createFollower,
+  deleteFollower
 } = require("../db");
 
 const { requireUser } = require('./utilities')
@@ -56,9 +58,9 @@ apiRouter.post("/register", async (req, res, next) => {
       JWT_SECRET
     );
     const response = {
-      user: user,
+      user,
       message: "Successfully created a new user",
-      token: token,
+      token
     };
     res.send(response);
   } catch (error) {
@@ -78,7 +80,7 @@ apiRouter.post("/login", async (req, res, next) => {
       JWT_SECRET
     );
     const response = {
-      user: user,
+      user,
       message: "Successfully logged in",
       token: token,
     };
@@ -106,5 +108,27 @@ apiRouter.delete("/:userId", requireUser, async (req, res, next) => {
     next(error);
   }
 });
+
+apiRouter.post('/:userId/follow', requireUser, async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const followerId = req.user.id
+    const follower = await createFollower({ userId, followerId });
+    res.send({ message: "Follower successfully created", follower})
+  } catch (error) {
+    next(error)
+  }
+})
+
+apiRouter.delete('/:userId/follow', requireUser, async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const followerId = req.user.id
+    await deleteFollower({ userId, followerId });
+    res.send({ message: "Follower successfully created"})
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = apiRouter;

@@ -51,6 +51,9 @@ apiRouter.use("/users", usersRouter);
 const squawksRouter = require("./squawks");
 apiRouter.use("/squawks", squawksRouter);
 
+const MessagesRouter = require("./messages");
+apiRouter.use("/messages", MessagesRouter);
+
 apiRouter.use((error, req, res, next) => {
   res.send({
     error: error.error,

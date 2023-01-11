@@ -44,7 +44,8 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
       "squawkContent" TEXT NOT NULL,
-      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      edited BOOLEAN DEFAULT FALSE
     );
     
     CREATE TABLE comments (
