@@ -9,7 +9,8 @@ module.exports = {
     getSquawksByUserId,
     getAllSquawks,
     attachInfoToSquawks,
-    getSquawkById
+    getSquawkById,
+    attachAuthorsToSquawks
 }
 
 async function createSquawk({
@@ -58,6 +59,20 @@ async function attachInfoToSquawks(squawks) {
         squawks[i].comments = await getCommentsBySquawkId(squawks[i].id)
         squawks[i].likes = await getLikesBySquawkId(squawks[i].id)
         squawks[i].parrots = await getParrotsBySquawkId(squawks[i].id)}
+        return squawks
+}
+
+async function attachAuthorsToSquawks(squawks) {
+    for ( let i = 0; i < squawks.length; i++) {
+        const { rows: [author] } = await client.query(`
+        SELECT squawks."userId", users.username, users.name, users."profilePicture"
+        FROM squawks
+        JOIN users
+        ON squawks."userId" = users.id
+        WHERE squawks.id = ${squawks[i].id};
+        `)
+        squawks[i].author = author
+        }
         return squawks
 }
 

@@ -1,4 +1,4 @@
-const { getAllSquawks, attachInfoToSquawks, createSquawk, deleteSquawk, getSquawkById, createComment, createLike, deleteLike, createParrot, deleteParrot } = require("../db");
+const { getAllSquawks, attachInfoToSquawks, createSquawk, deleteSquawk, getSquawkById, createComment, createLike, deleteLike, createParrot, deleteParrot, attachAuthorsToSquawks } = require("../db");
 const { requireUser } = require("./utilities");
 
 const apiRouter = require("express").Router();
@@ -6,6 +6,7 @@ const apiRouter = require("express").Router();
 apiRouter.get('/', async (req, res, next) => {
     try {
         const squawks = await getAllSquawks()
+        await attachAuthorsToSquawks(squawks)
         await attachInfoToSquawks(squawks)
         res.send(squawks)
     } catch (error) {

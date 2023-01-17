@@ -37,13 +37,15 @@ async function buildTables() {
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
       name VARCHAR(255) NOT NULL,
-      bio TEXT NOT NULL
+      bio TEXT,
+      "profilePicture" TEXT DEFAULT 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'
     );
     
     CREATE TABLE squawks (
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
       "squawkContent" TEXT NOT NULL,
+      picture TEXT,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       edited BOOLEAN DEFAULT FALSE
     );
@@ -98,17 +100,17 @@ async function populateInitialData() {
     console.log("Starting to create users...");
     const usersToCreate = [
       {
-        username: "mrmister18",
-        password: "baddog18",
-        name: "Isaac Hernandez",
-        bio: "This is my bio",
-      },
-      { username: "username", password: "password", name: "name", bio: "bio" },
+        username: "loverboi19",
+        password: "studmuffin123",
+        name: "Boyle McPoyle",
+        bio: "I'm just a handsome guy lookin' for love in all the wrong places"},
+      { username: "sonofcrush1", password: "gnarly81", name: "Squirt", bio: "Chillin' and vibin'", profilePicture: "https://qph.cf2.quoracdn.net/main-qimg-3856e8aa0affaa7501e99dd0750deef0-lq" },
       {
-        username: "fakeusername",
-        password: "fakepassword",
-        name: "fakename",
-        bio: "fakebio",
+        username: "hexmama24",
+        password: "toilandtrouble666",
+        name: "Helga the Horrible",
+        bio: "I like to travel and eat the occasional child",
+        profilePicture: "https://static.theprint.in/wp-content/uploads/2020/10/witch-portrait-fantasy-fairy-tale-e1604119216420.jpg"
       },
     ];
     const users = await Promise.all(usersToCreate.map(User.createUser));

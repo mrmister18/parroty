@@ -25,19 +25,29 @@ async function createUser({
   username,
   password,
   name,
-  bio
+  ...fields
 }) {
   const hashedPassword = await bcrypt.hash(password, 10);
+
+  const setKeys = Object.keys(fields)
+    .map((key) => `"${key}"`)
+    .join(", ");
+
+    const setIndexes = Object.keys(fields)
+    .map((key, index) => `$${index + 4}`)
+    .join(", ");
+
+    let arr = [username, hashedPassword, name].concat(Object.values(fields))
 
   const {
     rows: [user],
   } = await client.query(
     `
-  INSERT INTO users (username, password, name, bio)
-  VALUES ($1, $2, $3, $4)
+  INSERT INTO users (username, password, name, ${setKeys})
+  VALUES ($1, $2, $3, ${setIndexes})
   RETURNING *;
   `,
-    [username, hashedPassword, name, bio]
+    arr
   );
 
   delete user.password;
