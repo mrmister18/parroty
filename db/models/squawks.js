@@ -10,18 +10,29 @@ module.exports = {
     getAllSquawks,
     attachInfoToSquawks,
     getSquawkById,
-    attachAuthorsToSquawks
+    attachAuthorsToSquawks,
+    updateSquawk
 }
 
 async function createSquawk({
     userId,
-    squawkContent
+    ...fields
 }) {
+    const setKeys = Object.keys(fields)
+    .map((key) => `"${key}"`)
+    .join(", ");
+
+    const setIndexes = Object.keys(fields)
+    .map((key, index) => `$${index + 2}`)
+    .join(", ");
+
+    let arr = [userId].concat(Object.values(fields))
+
     const { rows: [squawk] } = await client.query(`
-        INSERT INTO squawks ("userId", "squawkContent")
-        VALUES ($1, $2)
+        INSERT INTO squawks ("userId", ${setKeys})
+        VALUES ($1, ${setIndexes})
         RETURNING *;
-    `, [userId, squawkContent])
+    `, arr)
     return squawk
 }
 
@@ -83,3 +94,27 @@ async function getSquawkById(id) {
     `, [id])
     return squawk
 }
+
+async function updateSquawk({ id, ...fields }) {
+    const setString = Object.keys(fields)
+      .map((key, index) => `"${key}"=$${index + 1}`)
+      .join(", ");
+  
+    if (setString === 0) {
+      return;
+    }
+  
+    const {
+      rows: [squawk],
+    } = await client.query(
+      `
+      UPDATE squawks
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *;
+      `,
+      Object.values(fields)
+    );
+  
+    return squawk;
+  }

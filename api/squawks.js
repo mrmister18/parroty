@@ -1,4 +1,4 @@
-const { getAllSquawks, attachInfoToSquawks, createSquawk, deleteSquawk, getSquawkById, createComment, createLike, deleteLike, createParrot, deleteParrot, attachAuthorsToSquawks } = require("../db");
+const { getAllSquawks, attachInfoToSquawks, createSquawk, deleteSquawk, getSquawkById, createComment, createLike, deleteLike, createParrot, deleteParrot, attachAuthorsToSquawks, updateSquawk } = require("../db");
 const { requireUser } = require("./utilities");
 
 const apiRouter = require("express").Router();
@@ -113,6 +113,24 @@ apiRouter.delete('/:squawkId', requireUser, async (req, res, next) => {
         await deleteSquawk({userId, squawkId})
         res.send({message: "Squawk deleted successfully"})} else {
             throw Error("User is not allowed to delete someone else's squawk")
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
+apiRouter.patch('/:squawkId', requireUser, async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const id = req.params.squawkId
+        const squawk = await getSquawkById(id)
+        if (squawk.userId === userId) {
+        const updatedSquawk = await updateSquawk({id, ...req.body})
+        const response = {
+            updatedSquawk, message: "Squawk successfully updated!"
+        }
+        res.send(response)} else {
+            throw Error("User is not allowed to edit someone else's squawk")
         }
     } catch (error) {
         next(error)

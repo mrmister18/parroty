@@ -38,7 +38,7 @@ async function buildTables() {
       password VARCHAR(255) NOT NULL,
       name VARCHAR(255) NOT NULL,
       bio TEXT,
-      "profilePicture" TEXT DEFAULT 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'
+      "profilePicture" TEXT
     );
     
     CREATE TABLE squawks (

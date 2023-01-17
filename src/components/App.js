@@ -37,8 +37,6 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <h1>Hello, World!</h1>
-      <p>API Status: {APIHealth}</p>
       {squawks.map((squawk) =>{
         return <>
         <div class="post">
@@ -64,7 +62,7 @@ const App = () => {
             </div>
           </div>
           <img
-            src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
+            src={squawk.picture ? squawk.picture: null}
             alt=""
           />
           <div class="post__footer">
