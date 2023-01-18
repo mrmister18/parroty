@@ -17,8 +17,7 @@ apiRouter.get('/', async (req, res, next) => {
 apiRouter.post('/', requireUser, async (req, res, next) => {
     try {
         const userId = req.user.id
-        const { squawkContent } = req.body;
-        const squawk = await createSquawk({userId, squawkContent})
+        const squawk = await createSquawk({userId, ...req.body})
         const response = {
             squawk: squawk,
             message: "Squawk successfully posted!"

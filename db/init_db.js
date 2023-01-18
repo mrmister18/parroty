@@ -44,7 +44,7 @@ async function buildTables() {
     CREATE TABLE squawks (
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
-      "squawkContent" TEXT NOT NULL,
+      "squawkContent" TEXT,
       picture TEXT,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       edited BOOLEAN DEFAULT FALSE

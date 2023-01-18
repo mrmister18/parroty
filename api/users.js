@@ -16,7 +16,8 @@ const {
   deleteUser,
   getUserByUsername,
   createFollower,
-  deleteFollower
+  deleteFollower,
+  updateUser
 } = require("../db");
 
 const { requireUser } = require('./utilities')
@@ -48,11 +49,12 @@ apiRouter.get("/me", requireUser, async (req, res, next) => {
 
 apiRouter.post("/register", async (req, res, next) => {
   try {
-    const { username, password, name, bio } = req.body;
+    const { username, password, name, bio, profilePicture } = req.body;
+    const fields = { bio, profilePicture }
     if (await getUserByUsername(username)) {
       throw Error("This username already exists");
     }
-    const user = await createUser({ username, password, name, bio });
+    const user = await createUser({ username, password, name, ...fields });
     const token = jwt.sign(
       { id: user.id, username: user.username },
       JWT_SECRET
@@ -128,6 +130,24 @@ apiRouter.delete('/:userId/follow', requireUser, async (req, res, next) => {
     res.send({ message: "Follower successfully created"})
   } catch (error) {
     next(error)
+  }
+})
+
+apiRouter.patch('/:userId', requireUser, async (req, res, next) => {
+  try {
+      const { id } = req.user
+      const { userId } = req.params
+      const user = await getUserById(userId)
+      if (user.id === id) {
+      const updatedUser = await updateUser({id: userId, ...req.body})
+      const response = {
+          updatedUser, message: "User successfully updated!"
+      }
+      res.send(response)} else {
+          throw Error("User is not allowed to edit someone else's profile")
+      }
+  } catch (error) {
+      next(error)
   }
 })
 

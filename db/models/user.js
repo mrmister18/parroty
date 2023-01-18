@@ -12,7 +12,8 @@ module.exports = {
   getUserByUsername,
   getUser,
   deleteUser,
-  attachInfoToUsers
+  attachInfoToUsers,
+  updateUser
 };
 
 async function getAllUsers() {
@@ -138,4 +139,28 @@ async function attachInfoToUsers(users) {
     users[i].squawks = await getSquawksByUserId(users[i].id);
     delete users[i].password}
       return users
+}
+
+async function updateUser({ id, ...fields }) {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+  if (setString === 0) {
+    return;
+  }
+
+  const {
+    rows: [user],
+  } = await client.query(
+    `
+    UPDATE users
+    SET ${setString}
+    WHERE id=${id}
+    RETURNING *;
+    `,
+    Object.values(fields)
+  );
+
+  return user;
 }
