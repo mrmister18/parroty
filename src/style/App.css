@@ -11,3 +11,31 @@
   color: var(--green);
   padding: 1rem;
 }
+
+.sidenav {
+  height: 100%;
+  position: fixed;
+  background-color: chartreuse;
+  min-width: 250px;
+}
+
+.sidenav a, button {
+  display: flex;
+  font-size: 42px;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  margin-left: 0;
+  margin-right: 20;
+  font-weight: 800;
+  align-items: center;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  background-color: aqua;
+}

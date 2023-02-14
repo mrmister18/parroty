@@ -2,13 +2,20 @@ import React, { useState, useEffect } from 'react';
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { getAPIHealth, getUsers, getSquawks } from '../axios-services';
+import { getAPIHealth, getUsers } from '../axios-services';
+import { Routes, Route } from 'react-router-dom'
 import '../style/App.css';
+import ParrotyFeed from './ParrotyFeed';
+import Sidenav from './Sidenav';
 
 const App = () => {
+  const baseurl = "http://localhost:4000/api/"
   const [APIHealth, setAPIHealth] = useState('');
   const [users, setUsers] = useState([]);
-  const [squawks, setSquawks] = useState([]);
+  const [user, setUser] = useState({});
+  const [token, setToken] = useState(
+    window.localStorage.getItem("token") || ""
+  );
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -27,54 +34,17 @@ const App = () => {
       setUsers(users)
     };
     getParrotyUsers()
-
-    const getParrotySquawks = async () => {
-      const squawks = await getSquawks()
-      setSquawks(squawks)
-    };
-    getParrotySquawks()
   }, []);
 
-  return (
-    <div className="app-container">
-      {squawks.map((squawk) =>{
-        return <>
-        <div class="post">
-        <div class="post__avatar">
-          <img
-            src={squawk.author.profilePicture}
-            alt=""
-          />
-        </div>
-
-        <div class="post__body">
-          <div class="post__header">
-            <div class="post__headerText">
-              <h3>
-                {squawk.author.name}
-                <span class="post__headerSpecial"
-                  ><span class="material-icons post__badge"> verified </span>@{squawk.author.username}</span
-                >
-              </h3>
-            </div>
-            <div class="post__headerDescription">
-              <p>{squawk.squawkContent}</p>
-            </div>
-          </div>
-          <img
-            src={squawk.picture ? squawk.picture: null}
-            alt=""
-          />
-          <div class="post__footer">
-            <span class="material-icons"> Parrots: {squawk.parrots.length} </span>
-            <span class="material-icons"> Likes: {squawk.likes.length} </span>
-            <span class="material-icons"> Comments: {squawk.comments.length} </span>
-          </div>
-        </div>
-      </div>
-        </>
-      })}
-    </div>
+  return (<>
+  <Sidenav token={token} setToken={setToken} baseurl={baseurl} setUser={setUser}></Sidenav>
+    <Routes>
+      <Route
+      path="/"
+      element={<ParrotyFeed />}>
+      </Route>
+    </Routes>
+    </>
   );
 };
 

@@ -38,7 +38,8 @@ async function buildTables() {
       password VARCHAR(255) NOT NULL,
       name VARCHAR(255) NOT NULL,
       bio TEXT,
-      "profilePicture" TEXT
+      "profilePicture" TEXT,
+      admin BOOLEAN DEFAULT FALSE
     );
     
     CREATE TABLE squawks (
