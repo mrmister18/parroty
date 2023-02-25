@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { getAPIHealth, getUsers } from '../axios-services';
-import { Routes, Route } from 'react-router-dom'
-import '../style/App.css';
-import ParrotyFeed from './ParrotyFeed';
-import Sidenav from './Sidenav';
+import { getAPIHealth, getUsers } from "../axios-services";
+import { Routes, Route } from "react-router-dom";
+import "../style/App.css";
+import ParrotyFeed from "./ParrotyFeed";
+import Sidenav from "./Sidenav";
+import Messages from "./Messages";
 
 const App = () => {
-  const baseurl = "http://localhost:4000/api/"
-  const [APIHealth, setAPIHealth] = useState('');
+  const [APIHealth, setAPIHealth] = useState("");
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
   const [token, setToken] = useState(
@@ -23,7 +23,7 @@ const App = () => {
     // invoke the adapter, await the response, and set the data
     const getAPIStatus = async () => {
       const { healthy } = await getAPIHealth();
-      setAPIHealth(healthy ? 'api is up! :D' : 'api is down :/');
+      setAPIHealth(healthy ? "api is up! :D" : "api is down :/");
     };
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
@@ -31,19 +31,20 @@ const App = () => {
 
     const getParrotyUsers = async () => {
       const users = await getUsers();
-      setUsers(users)
+      setUsers(users);
     };
-    getParrotyUsers()
+    getParrotyUsers();
   }, []);
 
-  return (<>
-  <Sidenav token={token} setToken={setToken} baseurl={baseurl} setUser={setUser}></Sidenav>
-    <Routes>
-      <Route
-      path="/"
-      element={<ParrotyFeed />}>
-      </Route>
-    </Routes>
+  return (
+    <>
+      <Sidenav token={token} setToken={setToken} />
+      <div className="main">
+      <Routes>
+        <Route path="/messages" element={<Messages user={user} setUser={setUser} token={token} />}></Route>
+        <Route path="/" element={<ParrotyFeed />}></Route>
+      </Routes>
+      </div>
     </>
   );
 };

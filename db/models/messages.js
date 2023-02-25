@@ -23,5 +23,17 @@ async function getAllMessagesByUser(userId) {
         SELECT * FROM messages
         WHERE receiver = ${userId}
         OR sender = ${userId};`)
-    return rows
+        let chats = {}
+        for (let i = 0; i < rows.length; i++) {
+            if (chats[rows[i].sender] && rows[i].sender !== userId) {
+                chats[rows[i].sender].push(rows[i])
+              } else if (chats[rows[i].receiver] && rows[i].receiver !== userId) {
+                chats[rows[i].receiver].push(rows[i])
+              } else if (!chats[rows[i].receiver] && rows[i].receiver !== userId) {
+                chats[rows[i].receiver] = [rows[i]]
+              } else if (!chats[rows[i].sender] && rows[i].sender !== userId) {
+                chats[rows[i].sender] = [rows[i]]
+              }
+        }
+    return Object.values(chats)
 }

@@ -32,7 +32,7 @@ apiRouter.get("/", async (req, res, next) => {
   }
 });
 
-apiRouter.get("/me", requireUser, async (req, res, next) => {
+apiRouter.post("/me", requireUser, async (req, res, next) => {
   try {
     const userId = req.user.id;
     const user = await getUserById(userId);
