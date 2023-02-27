@@ -1,4 +1,5 @@
 const client = require('../client');
+const { getUserById } = require('./user')
 
 module.exports = {
     createMessage,
@@ -35,5 +36,12 @@ async function getAllMessagesByUser(userId) {
                 chats[rows[i].sender] = [rows[i]]
               }
         }
-    return Object.values(chats)
+        let output = []
+        for (let i = 0; i < Object.keys(chats).length; i++) {
+          const user = await getUserById(Object.keys(chats)[i])
+          output.push({username: user.username,
+            name: user.name,
+          conversation: chats[Object.keys(chats)[i]]}) 
+        }
+    return output
 }

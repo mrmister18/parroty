@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getUser } from "../axios-services"
+const timeAgo = require('node-time-ago');
 
 const Messages = ({user, setUser, token}) => {
-    const [messages, setMessages] = useState({});
+    const [messages, setMessages] = useState([]);
+    const [conversation, setConversation] = useState([]);
 
     useEffect(() => {
         const setUserProfile = async () => {
@@ -12,8 +14,13 @@ const Messages = ({user, setUser, token}) => {
         }
         setUserProfile()
     }, [])
+    console.log(conversation)
     return <>
-    {messages.length ? <h1>Wow look at you mistuh popular!</h1> : <h1>Aww look who's unloved</h1>}
+    {messages.length ? <>{messages.map((message) => {
+        return <div onClick={() => {setConversation(message.conversation)}}>
+            {message.name} {`@${message.username}`} {message.conversation[0].messageContent} {timeAgo(message.conversation[0].createdAt)}
+        </div>
+    })}</> : <h1>Aww look who's unloved</h1>}
     </>
 }
 
