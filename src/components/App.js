@@ -8,6 +8,7 @@ import "../style/App.css";
 import ParrotyFeed from "./ParrotyFeed";
 import Sidenav from "./Sidenav";
 import Messages from "./Messages";
+import Profile from "./Profile";
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -16,6 +17,11 @@ const App = () => {
   const [token, setToken] = useState(
     window.localStorage.getItem("token") || ""
   );
+  const [squawks, setSquawks] = useState([]);
+
+  useEffect(() => {
+    window.localStorage.setItem("token", token);
+  }, [token]);
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -42,7 +48,8 @@ const App = () => {
       <div className="main">
       <Routes>
         <Route path="/messages" element={<Messages user={user} setUser={setUser} token={token} />}></Route>
-        <Route path="/" element={<ParrotyFeed />}></Route>
+        <Route path="/" element={<ParrotyFeed squawks={squawks} setSquawks={setSquawks} />}></Route>
+        <Route path="/:username" element={<Profile squawks={squawks} setSquawks={setSquawks} />}></Route>
       </Routes>
       </div>
     </>

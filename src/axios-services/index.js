@@ -17,6 +17,15 @@ export async function getUsers() {
   }
 }
 
+export async function getProfile(username) {
+  try {
+    const { data } = await axios.get(`/api/users/${username}`);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function getSquawks() {
   try {
     const { data } = await axios.get("/api/squawks");

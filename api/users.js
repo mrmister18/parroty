@@ -32,6 +32,17 @@ apiRouter.get("/", async (req, res, next) => {
   }
 });
 
+apiRouter.get("/:username", async (req, res, next) => {
+  try {
+    const {username} = req.params
+    const user = await getUserByUsername(username);
+    await attachInfoToUsers([user]);
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
+
 apiRouter.post("/me", requireUser, async (req, res, next) => {
   try {
     const userId = req.user.id;

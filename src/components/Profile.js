@@ -1,17 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks } from '../axios-services';
+import { getSquawks, getProfile } from '../axios-services';
+import { useParams } from 'react-router-dom'
 
-const ParrotyFeed = ({squawks, setSquawks}) => {
+const Profile = ({squawks, setSquawks}) => {
+
+const { username } = useParams();
+const [profile, setProfile] = useState({})
 
     useEffect(() => {
-        const getParrotySquawks = async () => {
-            const squawks = await getSquawks()
-            setSquawks(squawks)
-          };
-          getParrotySquawks()
-    }, [])
+      const getViewingProfile = async () => {
+        const data = await getProfile(username)
+        setProfile(data)
+      }
 
-    return <div className="app-container">
+      getViewingProfile()
+      
+        const getProfileSquawks = async () => {
+            const squawks = await getSquawks()
+            const profileSquawks = squawks.filter((squawk) => squawk.author.username === username)
+            setSquawks(profileSquawks)
+          };
+          getProfileSquawks()
+          
+    }, [])
+    return <>
+    <div>
+    <img src={`${profile.profilePicture}`}></img>
+    <div>{profile.name}</div>
+    <div>@{profile.username}</div>
+    <div>{profile.bio}</div>
+    <div>{profile.following?.length} Following {profile.followers?.length} Followers</div>
+    </div>
+    <div className="app-container">
       {squawks.map((squawk) =>{
         return <>
         <div className="post" key={squawk.id}>
@@ -49,7 +69,7 @@ const ParrotyFeed = ({squawks, setSquawks}) => {
       </div>
         </>
       })}
-    </div>
+    </div></>
 }
 
-export default ParrotyFeed;
+export default Profile;
