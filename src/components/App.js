@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { getAPIHealth, getUsers } from "../axios-services";
+import { getAPIHealth, getUsers, getUser } from "../axios-services";
 import { Routes, Route } from "react-router-dom";
 import "../style/App.css";
 import ParrotyFeed from "./ParrotyFeed";
 import Sidenav from "./Sidenav";
 import Messages from "./Messages";
 import Profile from "./Profile";
+import Home from './Home'
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -18,6 +19,7 @@ const App = () => {
     window.localStorage.getItem("token") || ""
   );
   const [squawks, setSquawks] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     window.localStorage.setItem("token", token);
@@ -40,16 +42,23 @@ const App = () => {
       setUsers(users);
     };
     getParrotyUsers();
-  }, []);
 
+    const setUserProfile = async () => {
+      const userProfile = await getUser(token)
+      setUser(userProfile)
+      setMessages(userProfile.messages)
+  }
+  setUserProfile()
+  }, []);
   return (
     <>
-      <Sidenav token={token} setToken={setToken} />
+      <Sidenav token={token} setToken={setToken} user={user} setUser={setUser} setMessages={setMessages} />
       <div className="main">
       <Routes>
-        <Route path="/messages" element={<Messages user={user} setUser={setUser} token={token} />}></Route>
+        <Route path="/messages" element={<Messages user={user} setUser={setUser} token={token} messages={messages} setMessages={setMessages} />}></Route>
         <Route path="/" element={<ParrotyFeed squawks={squawks} setSquawks={setSquawks} />}></Route>
         <Route path="/:username" element={<Profile squawks={squawks} setSquawks={setSquawks} />}></Route>
+        <Route path="/home" element={<Home setSquawks={setSquawks} squawks={squawks} user={user} />}></Route>
       </Routes>
       </div>
     </>

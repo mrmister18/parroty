@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getUser } from "../axios-services"
 const timeAgo = require('node-time-ago');
 
-const Messages = ({user, setUser, token}) => {
-    const [messages, setMessages] = useState([]);
+const Messages = ({messages}) => {
     const [conversation, setConversation] = useState([]);
 
-    useEffect(() => {
-        const setUserProfile = async () => {
-            const userProfile = await getUser(token)
-            setUser(userProfile)
-            setMessages(userProfile.messages)
-        }
-        setUserProfile()
-    }, [])
-    console.log(conversation)
     return <>
     {messages.length ? <>{messages.map((message) => {
         return <div onClick={() => {setConversation(message.conversation)}}>

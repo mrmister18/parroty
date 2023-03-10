@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerNewUser, userLogin } from "../axios-services";
 
-const Sidenav = ({ token, setToken }) => {
+const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
   const [registering, setRegistering] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const navigate = useNavigate()
 
   function closeForm() {
     document.getElementById("myForm").style.display = "none";
@@ -31,8 +32,12 @@ const Sidenav = ({ token, setToken }) => {
         {token ? <Link to="/home">Home</Link> : null}
         <Link to="/">Explore</Link>
         {token ? <Link to="/messages">Messages</Link> : null}
+        {/* {token ? <Link to={user.username}>Profile</Link> : null} */}
         {token ? (
-          <button onClick={() => setToken("")}>Logout</button>
+          <button onClick={() => {setToken("")
+          setMessages([])
+          setUser({})
+        navigate('/')}}>Logout</button>
         ) : (
           <>
             <button
