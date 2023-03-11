@@ -13,8 +13,7 @@ const ParrotyFeed = ({squawks, setSquawks}) => {
 
     return <div className="app-container">
       {squawks.map((squawk) =>{
-        return <>
-        <div className="post" key={squawk.id}>
+        return <div className="post" key={`${squawk.id}`}>
         <div className="post__avatar">
           <img
             src={squawk.author.profilePicture}
@@ -47,7 +46,6 @@ const ParrotyFeed = ({squawks, setSquawks}) => {
           </div>
         </div>
       </div>
-        </>
       })}
     </div>
 }

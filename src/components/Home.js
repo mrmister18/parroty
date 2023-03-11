@@ -1,21 +1,26 @@
 import React, {useEffect} from "react"
-import { getSquawks } from '../axios-services';
+import { getSquawks, getUser } from '../axios-services';
 
-const Home = ({setSquawks, squawks, user}) => {
+const Home = ({setSquawks, squawks, user, setUser, token}) => {
+    useEffect(() => {
+      const setUserProfile = async () => {
+        const userProfile = await getUser(token)
+  setUser(userProfile)
+    }
+    setUserProfile()
+
     const following = []
-    for (let i = 0; i < user.following.length; i++) {
-      following.push(user.following[i].userId)
+    for (let i = 0; i < user?.following?.length; i++) {
+      following.push(user?.following[i]?.userId)
     }
 
-    useEffect(() => {
         const getFeedSquawks = async () => {
-            const squawks = await getSquawks()
-            const profileSquawks = squawks.filter((squawk) => following.includes(squawk.userId) )
+            const homeSquawks = await getSquawks()
+            const profileSquawks = homeSquawks.filter((squawk) => following.includes(squawk.userId) )
             setSquawks(profileSquawks)
           };
           getFeedSquawks()
     }, [])
-
     return <div className="app-container">
     {squawks.map((squawk) =>{
       return <>
