@@ -32,7 +32,7 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
         {token ? <Link to="/home">Home</Link> : null}
         <Link to="/">Explore</Link>
         {token ? <Link to="/messages">Messages</Link> : null}
-        {/* {token ? <Link to={user.username}>Profile</Link> : null} */}
+        {user ? <Link to={user?.username}>Profile</Link> : null}
         {token ? (
           <button onClick={() => {setToken("")
           setMessages([])

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { getAPIHealth, getUsers } from "../axios-services";
+import { getAPIHealth, getUsers, getUser } from "../axios-services";
 import { Routes, Route } from "react-router-dom";
 import "../style/App.css";
 import ParrotyFeed from "./ParrotyFeed";
@@ -43,7 +43,14 @@ const App = () => {
       setUsers(users);
     };
     getParrotyUsers();
+
+    const setUserProfile = async () => {
+      if (token) {const userProfile = await getUser(token)
+setUser(userProfile)}
+  }
+  setUserProfile()
   }, []);
+  console.log(user)
   return (
     <>
       <Sidenav token={token} setToken={setToken} user={user} setUser={setUser} setMessages={setMessages} />
