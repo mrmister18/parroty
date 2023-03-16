@@ -14,7 +14,6 @@ const {squawkId} = useParams();
         }
         fetchSquawk()
     }, [])
-console.log(squawk)
     return <div className="post" key={`${squawk.id}`}>
         <div className="post__avatar">
           <img

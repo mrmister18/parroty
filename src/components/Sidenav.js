@@ -29,10 +29,10 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
   return (
     <>
       <div className="sidenav">
-        {token ? <Link to="/home">Home</Link> : null}
+        {token && <Link to="/home">Home</Link>}
         <Link to="/">Explore</Link>
-        {token ? <Link to="/messages">Messages</Link> : null}
-        {user ? <Link to={user?.username}>Profile</Link> : null}
+        {token && <Link to="/messages">Messages</Link>}
+        {user.username && <Link to={user.username}>Profile</Link>}
         {token ? (
           <button onClick={() => {setToken("")
           setMessages([])
@@ -64,6 +64,8 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
           onSubmit={(event) => {
             event.preventDefault();
             registering ? registeringUser() : loggingIn();
+            setUsername("")
+            setPassword("")
           }}
         >
           {registering ? <h1>Register</h1> : <h1>Login</h1>}
@@ -71,6 +73,7 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
           <input
             name="username"
             placeholder="Username"
+            value={username}
             onChange={(event) => {
               setUsername(event.target.value);
             }}
@@ -79,8 +82,9 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
           <label htmlFor="password">Password</label>
           <input
             name="password"
-            type={password}
+            type="password"
             placeholder="Password"
+            value={password}
             onChange={(event) => {
               setPassword(event.target.value);
             }}

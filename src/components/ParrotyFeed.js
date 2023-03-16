@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getSquawks } from '../axios-services';
+import { useNavigate } from "react-router-dom";
 
 const ParrotyFeed = ({squawks, setSquawks}) => {
-
+const navigate = useNavigate();
     useEffect(() => {
         const getParrotySquawks = async () => {
             const squawks = await getSquawks()
@@ -13,7 +14,7 @@ const ParrotyFeed = ({squawks, setSquawks}) => {
 
     return <div className="app-container">
       {squawks.map((squawk) =>{
-        return <div className="post" key={`${squawk.id}`}>
+        return <div className="post" key={`${squawk.id}`} onClick={() => {navigate(`/${squawk.author.username}/${squawk.id}`)}}>
         <div className="post__avatar">
           <img
             src={squawk.author.profilePicture}

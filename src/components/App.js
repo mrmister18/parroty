@@ -50,7 +50,6 @@ setUser(userProfile)}
   }
   setUserProfile()
   }, []);
-  console.log(user)
   return (
     <>
       <Sidenav token={token} setToken={setToken} user={user} setUser={setUser} setMessages={setMessages} />

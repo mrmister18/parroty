@@ -34,7 +34,7 @@ const [profile, setProfile] = useState({})
     <div className="app-container">
       {squawks.map((squawk) =>{
         return <>
-        <div className="post" key={squawk.id}>
+        <div className="post" key={squawk.id} onClick={() => {navigate(`/${squawk.author.username}/${squawk.id}`)}}>
         <div className="post__avatar">
           <img
             src={squawk.author.profilePicture}
