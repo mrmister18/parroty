@@ -12,12 +12,20 @@ const Messages = ({messages, token, setMessages}) => {
         }
         setUserMessages()
     }, [])
+    
     return <>
     {messages.length ? <>{messages.map((message) => {
         return <div onClick={() => {setConversation(message.conversation)}}>
             {message.name} {`@${message.username}`} {message.conversation[0].messageContent} {timeAgo(message.conversation[0].createdAt)}
         </div>
     })}</> : <h1>No active conversations</h1>}
+    {conversation.length ? <><h1>Conversation</h1>
+    {conversation.map((message) => {
+        return <><div>{message.messageContent}</div>
+        <span>{timeAgo(message.createdAt)}</span></>
+    })}
+    </> : null}
+
     </>
 }
 
