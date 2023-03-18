@@ -99,3 +99,19 @@ export async function getUser(token) {
     console.log(error);
   }
 }
+
+export async function sendMessage(messageContent, recipientId, token) {
+  try {
+    const { data } = await axios.post(
+      baseurl + `messages/${recipientId}`,
+      {messageContent},
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}

@@ -41,6 +41,8 @@ async function getAllMessagesByUser(userId) {
           const user = await getUserById(Object.keys(chats)[i])
           output.push({username: user.username,
             name: user.name,
+            profilePicture: user.profilePicture,
+            userId: user.id,
           conversation: chats[Object.keys(chats)[i]]}) 
         }
     return output

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 const timeAgo = require('node-time-ago');
-import { getUser } from "../axios-services";
+import { getUser, sendMessage } from "../axios-services";
 
 const Messages = ({messages, token, setMessages}) => {
-    const [conversation, setConversation] = useState([]);
+    const [conversation, setConversation] = useState({});
+    const [message, setMessage] = useState("")
 
     useEffect(() => {
         const setUserMessages = async () => {
@@ -15,15 +16,22 @@ const Messages = ({messages, token, setMessages}) => {
     
     return <>
     {messages.length ? <>{messages.map((message) => {
-        return <div onClick={() => {setConversation(message.conversation)}}>
-            {message.name} {`@${message.username}`} {message.conversation[0].messageContent} {timeAgo(message.conversation[0].createdAt)}
+        return <div onClick={() => {setConversation(message)}}>
+            {message.name} {`@${message.username}`} {message.conversation[message.conversation.length - 1].messageContent} {timeAgo(message.conversation[message.conversation.length - 1].createdAt)}
         </div>
     })}</> : <h1>No active conversations</h1>}
-    {conversation.length ? <><h1>Conversation</h1>
-    {conversation.map((message) => {
-        return <><div>{message.messageContent}</div>
+    {conversation?.conversation?.length ? <><h1>{conversation.name} @{conversation.username}</h1>
+    {conversation.conversation.map((message) => {
+        return <><h3>{message.messageContent}</h3>
         <span>{timeAgo(message.createdAt)}</span></>
-    })}
+    })}<br/>
+    <form onSubmit={(event) => {
+        event.preventDefault();
+        const sentMessage = sendMessage(message, conversation.userId, token)
+        setMessage("")
+    }}>
+        <input value={message} onChange={(event) => setMessage(event.target.value)}></input><button type="submit" disabled={message ? false : true}>Send</button>
+    </form>
     </> : null}
 
     </>
