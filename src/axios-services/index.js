@@ -48,7 +48,7 @@ export async function getAPIHealth() {
 export async function registerNewUser({ username, password, name }) {
   try {
     const { data } = await axios.post(
-      baseurl + "/users/register",
+      baseurl + "users/register",
       {
         username,
         password,
@@ -68,7 +68,7 @@ export async function registerNewUser({ username, password, name }) {
 export async function userLogin({ username, password }) {
   try {
     const { data } = await axios.post(
-      baseurl + "/users/login",
+      baseurl + "users/login",
       {
         username,
         password,
@@ -105,6 +105,22 @@ export async function sendMessage(messageContent, recipientId, token) {
     const { data } = await axios.post(
       baseurl + `messages/${recipientId}`,
       {messageContent},
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function follow(userId, token) {
+  try {
+    const {data} = await axios.post(
+      baseurl + `users/${userId}/follow`,
+      null,
       {
         headers: { "Content-Type": "application/json",
         'Authorization': `Bearer ${token}` },

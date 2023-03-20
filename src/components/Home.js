@@ -1,7 +1,10 @@
 import React, {useEffect} from "react"
 import { getSquawks, getUser } from '../axios-services';
+import { useNavigate } from "react-router-dom";
 
 const Home = ({setSquawks, squawks, user, setUser, token}) => {
+  const navigate = useNavigate();
+
     useEffect(() => {
       const setUserProfile = async () => {
         const userProfile = await getUser(token)

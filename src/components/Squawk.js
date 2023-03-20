@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getSquawks } from '../axios-services';
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 const Squawk = () => {
 const [squawk, setSquawk] = useState({})
 const {squawkId} = useParams();
+const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSquawk = async () => {
@@ -25,7 +26,7 @@ const {squawkId} = useParams();
         <div className="post__body">
           <div className="post__header">
             <div className="post__headerText">
-              <h3>
+              <h3 onClick={() => {navigate(`/${squawk.author.username}`)}}>
                 {squawk.author?.name}
                 <span className="post__headerSpecial"
                   ><span className="material-icons post__badge"> </span>@{squawk.author?.username}</span

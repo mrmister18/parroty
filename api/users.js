@@ -138,7 +138,7 @@ apiRouter.delete('/:userId/follow', requireUser, async (req, res, next) => {
     const { userId } = req.params;
     const followerId = req.user.id
     await deleteFollower({ userId, followerId });
-    res.send({ message: "Follower successfully created"})
+    res.send({ message: "Follower successfully deleted"})
   } catch (error) {
     next(error)
   }
