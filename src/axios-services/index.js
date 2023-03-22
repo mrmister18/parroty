@@ -131,3 +131,17 @@ export async function follow(userId, token) {
     console.log(error)
   }
 }
+
+export async function unfollow(userId, token) {
+  try {
+    await axios.delete(
+      baseurl + `users/${userId}/follow`,
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+  } catch (error) {
+    console.log(error)
+  }
+}

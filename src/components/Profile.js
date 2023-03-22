@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks, getProfile, follow } from '../axios-services';
-import { useParams } from 'react-router-dom'
+import { getSquawks, getProfile, follow, unfollow } from '../axios-services';
+import { useParams, useNavigate } from 'react-router-dom'
 
 const Profile = ({squawks, setSquawks, user, token}) => {
 
 const { username } = useParams();
 const [profile, setProfile] = useState({})
+const navigate = useNavigate();
 
     useEffect(() => {
       const getViewingProfile = async () => {
@@ -30,7 +31,7 @@ const [profile, setProfile] = useState({})
     <div>@{profile.username}</div>
     <div>{profile.bio}</div>
     <div>{profile.following?.length} Following {profile.followers?.length} Followers</div>
-    {user.username === username ? <button>Edit Profile</button> : <><button>Message</button> <button onClick={async () => {console.log(profile.id)}}>Follow</button></>}
+    {user.username === username ? <button>Edit Profile</button> : <><button>Message</button> {user?.following.find(person => person.userId === profile.id) ? <button onClick={async () => {await unfollow(profile.id, token)}}>Unfollow</button> : <button onClick={async () => {await follow(profile.id, token)}}>Follow</button>}</>}
     </div>
     <div className="app-container">
       {squawks.map((squawk) =>{

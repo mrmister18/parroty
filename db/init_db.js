@@ -70,20 +70,23 @@ async function buildTables() {
     CREATE TABLE followers (
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
-      "followerId" INTEGER REFERENCES users(id)
+      "followerId" INTEGER REFERENCES users(id),
+      UNIQUE ("userId", "followerId")
     );
     
     CREATE TABLE parrots (
       id SERIAL PRIMARY KEY,
       "squawkId" INTEGER REFERENCES squawks(id),
       "userId" INTEGER REFERENCES users(id),
-      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE ("userId", "squawkId")
     );
     
     CREATE TABLE likes (
       id SERIAL PRIMARY KEY,
       "squawkId" INTEGER REFERENCES squawks(id),
-      "userId" INTEGER REFERENCES users(id)
+      "userId" INTEGER REFERENCES users(id),
+      UNIQUE ("squawkId", "userId")
     );`
     );
     console.log("Finished creating tables!");
