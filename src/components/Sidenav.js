@@ -96,6 +96,7 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
               <input
                 name="name"
                 placeholder="Name"
+                value={name}
                 onChange={(event) => {
                   setName(event.target.value);
                 }}

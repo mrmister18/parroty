@@ -151,6 +151,11 @@ apiRouter.patch('/:userId', requireUser, async (req, res, next) => {
       const user = await getUserById(userId)
       if (user.id === id) {
       const updatedUser = await updateUser({id: userId, ...req.body})
+      delete updatedUser.password
+      updatedUser.followers = await getFollowersById(userId);
+      updatedUser.following = await getFollowersByFollowerId(userId);
+      updatedUser.squawks = await getSquawksByUserId(userId);
+      updatedUser.messages = await getAllMessagesByUser(userId);
       const response = {
           updatedUser, message: "User successfully updated!"
       }

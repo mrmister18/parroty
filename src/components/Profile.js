@@ -1,12 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks, getProfile, follow, unfollow } from '../axios-services';
+import { getSquawks, getProfile, follow, unfollow, updateUser } from '../axios-services';
 import { useParams, useNavigate } from 'react-router-dom'
 
-const Profile = ({squawks, setSquawks, user, token}) => {
+const Profile = ({squawks, setSquawks, user, token, setUser}) => {
 
 const { username } = useParams();
 const [profile, setProfile] = useState({})
+const [name, setName] = useState("")
+const [bio, setBio] = useState("")
+const [profilePicture, setProfilePicture] = useState("")
 const navigate = useNavigate();
+
+function closeForm() {
+  document.getElementById("profileForm").style.display = "none";
+}
+
+function openForm() {
+  document.getElementById("profileForm").style.display = "block";
+}
+
+async function updateUserProfile() {
+  const data = await updateUser({ name, bio, profilePicture, token, userId: user.id });
+  setProfile(data.updatedUser)
+  setUser(data.updatedUser)
+}
 
     useEffect(() => {
       const getViewingProfile = async () => {
@@ -24,6 +41,7 @@ const navigate = useNavigate();
           getProfileSquawks()
           
     }, [])
+    console.log(user)
     return <>
     <div>
     <img src={`${profile.profilePicture}`}></img>
@@ -31,7 +49,7 @@ const navigate = useNavigate();
     <div>@{profile.username}</div>
     <div>{profile.bio}</div>
     <div>{profile.following?.length} Following {profile.followers?.length} Followers</div>
-    {user.username === username ? <button>Edit Profile</button> : <><button>Message</button> {user?.following.find(person => person.userId === profile.id) ? <button onClick={async () => {await unfollow(profile.id, token)}}>Unfollow</button> : <button onClick={async () => {await follow(profile.id, token)}}>Follow</button>}</>}
+    {user.username === username ? <button onClick={openForm}>Edit Profile</button> : <><button>Message</button> {user?.following.find(person => person.userId === profile.id) ? <button onClick={async () => {await unfollow(profile.id, token)}}>Unfollow</button> : <button onClick={async () => {await follow(profile.id, token)}}>Follow</button>}</>}
     </div>
     <div className="app-container">
       {squawks.map((squawk) =>{
@@ -71,7 +89,46 @@ const navigate = useNavigate();
       </div>
         </>
       })}
-    </div></>
+    </div>
+      <div className="popup" id="profileForm">
+        <form onSubmit={async (event) => {
+          event.preventDefault();
+          await updateUserProfile()
+        }}>
+          <h1>Edit Profile</h1>
+        <label htmlFor="name">Name</label>
+              <input
+                name="name"
+                placeholder="Name"
+                value={name}
+                onChange={(event) => {
+                  setName(event.target.value);
+                }}
+                required
+              ></input>
+              <label htmlFor="bio">Bio</label>
+              <input
+                name="bio"
+                placeholder="Bio"
+                value={bio}
+                onChange={(event) => {
+                  setBio(event.target.value);
+                }}
+              ></input>
+              <label htmlFor="profilePicture">Profile Picture</label>
+              <input
+                name="profilePicture"
+                placeholder="Profile Picture"
+                value={profilePicture}
+                onChange={(event) => {
+                  setProfilePicture(event.target.value);
+                }}
+              ></input>
+              <button type="submit">Save Changes</button>
+              <button type="button" onClick={closeForm}>Close</button>
+        </form>
+      </div>
+    </>
 }
 
 export default Profile;

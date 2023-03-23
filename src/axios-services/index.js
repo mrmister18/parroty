@@ -145,3 +145,24 @@ export async function unfollow(userId, token) {
     console.log(error)
   }
 }
+
+export async function updateUser({ name, bio, profilePicture, userId, token }) {
+  try {
+    const { data } = await axios.patch(
+      baseurl + `users/${userId}`,
+      {
+        name,
+        bio,
+        profilePicture
+      },
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    );
+    document.getElementById("profileForm").style.display = "none";
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}

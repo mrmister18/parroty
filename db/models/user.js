@@ -161,6 +161,6 @@ async function updateUser({ id, ...fields }) {
     `,
     Object.values(fields)
   );
-
+  delete user.password;
   return user;
 }
