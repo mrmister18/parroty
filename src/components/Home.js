@@ -1,9 +1,10 @@
-import React, {useEffect} from "react"
-import { getSquawks, getUser } from '../axios-services';
+import React, {useEffect, useState} from "react"
+import { createSquawk, getSquawks, getUser } from '../axios-services';
 import { useNavigate } from "react-router-dom";
 
 const Home = ({setSquawks, squawks, user, setUser, token}) => {
   const navigate = useNavigate();
+  const [squawkContent, setSquawkContent] = useState("")
 
     useEffect(() => {
       const setUserProfile = async () => {
@@ -19,18 +20,27 @@ const Home = ({setSquawks, squawks, user, setUser, token}) => {
 
         const getFeedSquawks = async () => {
             const homeSquawks = await getSquawks()
-            const profileSquawks = homeSquawks.filter((squawk) => following.includes(squawk.userId) )
+            const profileSquawks = homeSquawks.filter((squawk) => {return following.includes(squawk.userId) || squawk.userId === user.id} )
             setSquawks(profileSquawks)
           };
           getFeedSquawks()
     }, [])
     return <div className="app-container">
+      <h1>Home</h1>
+      <form onSubmit={async (event) => {
+        event.preventDefault();
+        const {squawk} = await createSquawk(squawkContent, token)
+        setSquawks([...squawks, squawk])
+        setSquawkContent("")
+    }}>
+        <input value={squawkContent} onChange={(event) => setSquawkContent(event.target.value)}></input><button type="submit" disabled={squawkContent ? false : true}>Squawk</button>
+    </form>
     {squawks.map((squawk) =>{
       return <>
       <div className="post" key={squawk.id} onClick={() => {navigate(`/${squawk.author.username}/${squawk.id}`)}}>
       <div className="post__avatar">
         <img
-          src={squawk.author.profilePicture}
+          src={squawk.author?.profilePicture}
           alt=""
         />
       </div>
@@ -39,9 +49,9 @@ const Home = ({setSquawks, squawks, user, setUser, token}) => {
         <div className="post__header">
           <div className="post__headerText">
             <h3>
-              {squawk.author.name}
+              {squawk.author?.name}
               <span className="post__headerSpecial"
-                ><span className="material-icons post__badge"> </span>@{squawk.author.username}</span
+                ><span className="material-icons post__badge"> </span>@{squawk.author?.username}</span
               >
             </h3>
           </div>
@@ -54,9 +64,9 @@ const Home = ({setSquawks, squawks, user, setUser, token}) => {
           alt=""
         />
         <div className="post__footer">
-          <span className="material-icons"> Parrots: {squawk.parrots.length} </span>
-          <span className="material-icons"> Likes: {squawk.likes.length} </span>
-          <span className="material-icons"> Comments: {squawk.comments.length} </span>
+          <span className="material-icons"> Parrots: {squawk.parrots?.length} </span>
+          <span className="material-icons"> Likes: {squawk.likes?.length} </span>
+          <span className="material-icons"> Comments: {squawk.comments?.length} </span>
         </div>
       </div>
     </div>

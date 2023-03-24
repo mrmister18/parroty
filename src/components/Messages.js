@@ -21,13 +21,13 @@ const Messages = ({messages, token, setMessages}) => {
     {messages.length ? <>{messages.map((message) => {
         return <div onClick={() => {setConversation(message.conversation)
         setRecipient(message)}}>
-            {message.name} {`@${message.username}`} {message.conversation[message.conversation.length - 1].messageContent} {timeAgo(message.conversation[message.conversation.length - 1].createdAt)}
+            {message.name} {`@${message.username}`} {message.conversation[message.conversation.length - 1].messageContent} {timeAgo(message.conversation[message.conversation.length - 1].createdAt, 'twitter')}
         </div>
     })}</> : <h1>No active conversations</h1>}
     {conversation?.length ? <><h1 onClick={() => {navigate(`/${recipient.username}`)}}>{recipient.name} @{recipient.username}</h1>
     {conversation.map((message) => {
         return <div key={message.id}><h3>{message.messageContent}</h3>
-        <span>{timeAgo(message.createdAt)}</span></div>
+        <span>{timeAgo(message.createdAt, 'twitter')}</span></div>
     })}<br/>
     <form onSubmit={async (event) => {
         event.preventDefault();

@@ -166,3 +166,19 @@ export async function updateUser({ name, bio, profilePicture, userId, token }) {
     console.log(error);
   }
 }
+
+export async function createSquawk(squawkContent, token) {
+  try {
+    const {data} = await axios.post(
+      baseurl + `squawks`,
+      {squawkContent},
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}

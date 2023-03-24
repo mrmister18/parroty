@@ -33,6 +33,17 @@ async function createSquawk({
         VALUES ($1, ${setIndexes})
         RETURNING *;
     `, arr)
+    squawk.comments = await getCommentsBySquawkId(squawk.id)
+        squawk.likes = await getLikesBySquawkId(squawk.id)
+        squawk.parrots = await getParrotsBySquawkId(squawk.id)
+        const { rows: [author] } = await client.query(`
+        SELECT squawks."userId", users.username, users.name, users."profilePicture"
+        FROM squawks
+        JOIN users
+        ON squawks."userId" = users.id
+        WHERE squawks.id = ${squawk.id};
+        `)
+        squawk.author = author
     return squawk
 }
 
