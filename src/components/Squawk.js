@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks } from '../axios-services';
+import { getSquawks, createComment } from '../axios-services';
 import { useParams, useNavigate } from 'react-router-dom'
 
-const Squawk = () => {
+const Squawk = ({token}) => {
 const [squawk, setSquawk] = useState({})
+const [commentContent, setCommentContent] = useState("")
 const {squawkId} = useParams();
 const navigate = useNavigate();
 
@@ -47,6 +48,16 @@ const navigate = useNavigate();
           </div>
         </div>
         <div>
+        <form onSubmit={async (event) => {
+        event.preventDefault();
+        const {comment} = await createComment(squawk.id, commentContent, token)
+        let update = {...squawk}
+        update.comments.push(comment)
+        setSquawk(update)
+        setCommentContent("")
+    }}>
+        <input value={commentContent} onChange={(event) => setCommentContent(event.target.value)}></input><button type="submit" disabled={commentContent ? false : true}>Post Comment</button>
+    </form>
             <p>Comments:</p>
             {squawk.comments?.length ? squawk?.comments.map((comment) => {
                 return <div>{comment.commentContent}</div>

@@ -59,7 +59,7 @@ setUser(userProfile)}
         <Route path="/" element={<ParrotyFeed squawks={squawks} setSquawks={setSquawks} />}></Route>
         <Route path="/:username" element={<Profile squawks={squawks} setSquawks={setSquawks} user={user} token={token} setUser={setUser} />}></Route>
         <Route path="/home" element={<Home setSquawks={setSquawks} squawks={squawks} user={user} setUser={setUser} token={token} />}></Route>
-        <Route path='/:username/:squawkId' element={<Squawk />}></Route>
+        <Route path='/:username/:squawkId' element={<Squawk token={token} />}></Route>
       </Routes>
       </div>
     </>

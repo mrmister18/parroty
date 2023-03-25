@@ -182,3 +182,19 @@ export async function createSquawk(squawkContent, token) {
     console.log(error)
   }
 }
+
+export async function createComment(squawkId, commentContent, token) {
+  try {
+    const {data} = await axios.post(
+      baseurl + `squawks/${squawkId}/comment`,
+      {commentContent},
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
