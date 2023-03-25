@@ -198,3 +198,63 @@ export async function createComment(squawkId, commentContent, token) {
     console.log(error)
   }
 }
+
+export async function like(squawkId, token) {
+  try {
+    const {data} = await axios.post(
+      baseurl + `squawks/${squawkId}/like`,
+      null,
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function unlike(squawkId, token) {
+  try {
+    await axios.delete(
+      baseurl + `squawks/${squawkId}/like`,
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function parrot(squawkId, token) {
+  try {
+    const {data} = await axios.post(
+      baseurl + `squawks/${squawkId}/parrot`,
+      null,
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function unparrot(squawkId, token) {
+  try {
+    await axios.delete(
+      baseurl + `squawks/${squawkId}/parrot`,
+      {
+        headers: { "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}` },
+      }
+    )
+  } catch (error) {
+    console.log(error)
+  }
+}
