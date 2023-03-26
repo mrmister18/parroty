@@ -86,14 +86,12 @@ export async function userLogin({ username, password }) {
 
 export async function getUser(token) {
   try {
-    const { data } = await axios.post(
-      baseurl + "users/me",
-      null,
-      {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
-      }
-    );
+    const { data } = await axios.post(baseurl + "users/me", null, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return data;
   } catch (error) {
     console.log(error);
@@ -104,45 +102,48 @@ export async function sendMessage(messageContent, recipientId, token) {
   try {
     const { data } = await axios.post(
       baseurl + `messages/${recipientId}`,
-      {messageContent},
+      { messageContent },
       {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
-    return data
+    );
+    return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 export async function follow(userId, token) {
   try {
-    const {data} = await axios.post(
+    const { data } = await axios.post(
       baseurl + `users/${userId}/follow`,
       null,
       {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
-    return data
+    );
+    return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 export async function unfollow(userId, token) {
   try {
-    await axios.delete(
-      baseurl + `users/${userId}/follow`,
-      {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
-      }
-    )
+    await axios.delete(baseurl + `users/${userId}/follow`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
@@ -153,11 +154,13 @@ export async function updateUser({ name, bio, profilePicture, userId, token }) {
       {
         name,
         bio,
-        profilePicture
+        profilePicture,
       },
       {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     document.getElementById("profileForm").style.display = "none";
@@ -169,92 +172,98 @@ export async function updateUser({ name, bio, profilePicture, userId, token }) {
 
 export async function createSquawk(squawkContent, token) {
   try {
-    const {data} = await axios.post(
+    const { data } = await axios.post(
       baseurl + `squawks`,
-      {squawkContent},
+      { squawkContent },
       {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
-    return data
+    );
+    return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 export async function createComment(squawkId, commentContent, token) {
   try {
-    const {data} = await axios.post(
+    const { data } = await axios.post(
       baseurl + `squawks/${squawkId}/comment`,
-      {commentContent},
+      { commentContent },
       {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
-    return data
+    );
+    return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 export async function like(squawkId, token) {
   try {
-    const {data} = await axios.post(
+    const { data } = await axios.post(
       baseurl + `squawks/${squawkId}/like`,
       null,
       {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
-    return data
+    );
+    return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 export async function unlike(squawkId, token) {
   try {
-    await axios.delete(
-      baseurl + `squawks/${squawkId}/like`,
-      {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
-      }
-    )
+    await axios.delete(baseurl + `squawks/${squawkId}/like`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 export async function parrot(squawkId, token) {
   try {
-    const {data} = await axios.post(
+    const { data } = await axios.post(
       baseurl + `squawks/${squawkId}/parrot`,
       null,
       {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    )
-    return data
+    );
+    return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 export async function unparrot(squawkId, token) {
   try {
-    await axios.delete(
-      baseurl + `squawks/${squawkId}/parrot`,
-      {
-        headers: { "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}` },
-      }
-    )
+    await axios.delete(baseurl + `squawks/${squawkId}/parrot`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }

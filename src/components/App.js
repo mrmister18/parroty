@@ -9,7 +9,7 @@ import ParrotyFeed from "./ParrotyFeed";
 import Sidenav from "./Sidenav";
 import Messages from "./Messages";
 import Profile from "./Profile";
-import Home from './Home'
+import Home from "./Home";
 import Squawk from "./Squawk";
 
 const App = () => {
@@ -45,22 +45,67 @@ const App = () => {
     getParrotyUsers();
 
     const setUserProfile = async () => {
-      if (token) {const userProfile = await getUser(token)
-setUser(userProfile)}
-  }
-  setUserProfile()
+      if (token) {
+        const userProfile = await getUser(token);
+        setUser(userProfile);
+      }
+    };
+    setUserProfile();
   }, []);
   return (
     <>
-      <Sidenav token={token} setToken={setToken} user={user} setUser={setUser} setMessages={setMessages} />
+      <Sidenav
+        token={token}
+        setToken={setToken}
+        user={user}
+        setUser={setUser}
+        setMessages={setMessages}
+      />
       <div className="main">
-      <Routes>
-        <Route path="/messages" element={<Messages token={token} messages={messages} setMessages={setMessages} />}></Route>
-        <Route path="/" element={<ParrotyFeed squawks={squawks} setSquawks={setSquawks} />}></Route>
-        <Route path="/:username" element={<Profile squawks={squawks} setSquawks={setSquawks} user={user} token={token} setUser={setUser} />}></Route>
-        <Route path="/home" element={<Home setSquawks={setSquawks} squawks={squawks} user={user} setUser={setUser} token={token} />}></Route>
-        <Route path='/:username/:squawkId' element={<Squawk token={token} />}></Route>
-      </Routes>
+        <Routes>
+          <Route
+            path="/messages"
+            element={
+              <Messages
+                token={token}
+                messages={messages}
+                setMessages={setMessages}
+              />
+            }
+          ></Route>
+          <Route
+            path="/"
+            element={<ParrotyFeed squawks={squawks} setSquawks={setSquawks} />}
+          ></Route>
+          <Route
+            path="/:username"
+            element={
+              <Profile
+                squawks={squawks}
+                setSquawks={setSquawks}
+                user={user}
+                token={token}
+                setUser={setUser}
+              />
+            }
+          ></Route>
+          <Route
+            path="/home"
+            element={
+              <Home
+                setSquawks={setSquawks}
+                squawks={squawks}
+                user={user}
+                setUser={setUser}
+                token={token}
+              />
+            }
+          ></Route>
+          <Route
+            path="/:username/:squawkId"
+            element={<Squawk token={token} />}
+          ></Route>
+        </Routes>
       </div>
     </>
   );

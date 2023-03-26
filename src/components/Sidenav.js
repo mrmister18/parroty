@@ -7,7 +7,7 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function closeForm() {
     document.getElementById("myForm").style.display = "none";
@@ -34,10 +34,16 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
         {token && <Link to="/messages">Messages</Link>}
         {user.username && <Link to={user.username}>Profile</Link>}
         {token ? (
-          <button onClick={() => {setToken("")
-          setMessages([])
-          setUser({})
-        navigate('/')}}>Logout</button>
+          <button
+            onClick={() => {
+              setToken("");
+              setMessages([]);
+              setUser({});
+              navigate("/");
+            }}
+          >
+            Logout
+          </button>
         ) : (
           <>
             <button
@@ -64,8 +70,8 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
           onSubmit={(event) => {
             event.preventDefault();
             registering ? registeringUser() : loggingIn();
-            setUsername("")
-            setPassword("")
+            setUsername("");
+            setPassword("");
           }}
         >
           {registering ? <h1>Register</h1> : <h1>Login</h1>}
