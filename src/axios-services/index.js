@@ -206,7 +206,7 @@ export async function createComment(squawkId, commentContent, token) {
   }
 }
 
-export async function like(squawkId, token) {
+export async function createLike(squawkId, token) {
   try {
     const { data } = await axios.post(
       baseurl + `squawks/${squawkId}/like`,
@@ -237,7 +237,7 @@ export async function unlike(squawkId, token) {
   }
 }
 
-export async function parrot(squawkId, token) {
+export async function createParrot(squawkId, token) {
   try {
     const { data } = await axios.post(
       baseurl + `squawks/${squawkId}/parrot`,

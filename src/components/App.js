@@ -103,7 +103,7 @@ const App = () => {
           ></Route>
           <Route
             path="/:username/:squawkId"
-            element={<Squawk token={token} />}
+            element={<Squawk token={token} user={user} />}
           ></Route>
         </Routes>
       </div>

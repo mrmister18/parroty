@@ -69,10 +69,13 @@ const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
         ) : (
           <>
             <button>Message</button>{" "}
-            {user?.following.find((person) => person.userId === profile.id) ? (
+            {user.id && user?.following.find((person) => person.userId === profile.id) ? (
               <button
                 onClick={async () => {
                   await unfollow(profile.id, token);
+                  let userCopy = { ...user };
+                  userCopy.following.splice(user?.following.findIndex((person) => person.userId === profile.id), 1);
+                  setUser(userCopy);
                 }}
               >
                 Unfollow

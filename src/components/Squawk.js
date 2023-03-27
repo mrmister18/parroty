@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks, createComment } from "../axios-services";
+import { getSquawks, createComment, createLike, unlike, createParrot, unparrot } from "../axios-services";
 import { useParams, useNavigate } from "react-router-dom";
 
-const Squawk = ({ token }) => {
+const Squawk = ({ token, user }) => {
   const [squawk, setSquawk] = useState({});
   const [commentContent, setCommentContent] = useState("");
   const { squawkId } = useParams();
@@ -55,6 +55,52 @@ const Squawk = ({ token }) => {
           </span>
         </div>
       </div>
+      {squawk.id && squawk?.likes.find((person) => person.userId === user.id) ? (
+              <button
+                onClick={async () => {
+                  await unlike(squawk.id, token);
+                  let squawkCopy = { ...squawk };
+                  squawkCopy.likes.splice(squawk?.likes.findIndex((person) => person.userId === user.id), 1);
+                  setSquawk(squawkCopy);
+                }}
+              >
+                Unlike
+              </button>
+            ) : (
+              <button
+                onClick={async () => {
+                  const { like } = await createLike(squawk.id, token);
+                  let squawkCopy = { ...squawk };
+                  squawkCopy.likes.push(like);
+                  setSquawk(squawkCopy);
+                }}
+              >
+                Like
+              </button>
+            )}
+            {squawk.id && squawk?.parrots.find((person) => person.userId === user.id) ? (
+              <button
+                onClick={async () => {
+                  await unparrot(squawk.id, token);
+                  let squawkCopy = { ...squawk };
+                  squawkCopy.parrots.splice(squawk?.parrots.findIndex((person) => person.userId === user.id), 1);
+                  setSquawk(squawkCopy);
+                }}
+              >
+                Unparrot
+              </button>
+            ) : (
+              <button
+                onClick={async () => {
+                  const { parrot } = await createParrot(squawk.id, token);
+                  let squawkCopy = { ...squawk };
+                  squawkCopy.parrots.push(parrot);
+                  setSquawk(squawkCopy);
+                }}
+              >
+                Parrot
+              </button>
+            )}
       <div>
         <form
           onSubmit={async (event) => {
