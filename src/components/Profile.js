@@ -177,6 +177,8 @@ const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
           <input
             name="profilePicture"
             placeholder="Profile Picture"
+            type="file"
+            accept="image/*"
             value={profilePicture}
             onChange={(event) => {
               setProfilePicture(event.target.value);

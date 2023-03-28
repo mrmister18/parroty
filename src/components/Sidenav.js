@@ -111,9 +111,11 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
             </>
           ) : null}
           {registering ? (
-            <button type="submit">Register</button>
+            <><button type="submit">Register</button>
+            <h4>Have an account already? <button onClick={() => {setRegistering(false)}}>Login Here!</button></h4></>
           ) : (
-            <button type="submit">Login</button>
+            <><button type="submit">Login</button>
+            <h4>Don't have an account? <button onClick={() => {setRegistering(true)}}>Register Here!</button></h4></>
           )}
           <button type="button" onClick={closeForm}>
             Close
