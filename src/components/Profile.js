@@ -179,9 +179,10 @@ const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
             placeholder="Profile Picture"
             type="file"
             accept="image/*"
-            value={profilePicture}
+            id="profileInput"
             onChange={(event) => {
-              setProfilePicture(event.target.value);
+              const [file] = profileInput.files
+              setProfilePicture(URL.createObjectURL(file))
             }}
           ></input>
           <button type="submit">Save Changes</button>
