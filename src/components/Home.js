@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 const Home = ({ setSquawks, squawks, user, setUser, token }) => {
   const navigate = useNavigate();
   const [squawkContent, setSquawkContent] = useState("");
+  const [squawkPicture, setSquawkPicture] = useState("");
+  const timeAgo = require("node-time-ago");
 
   useEffect(() => {
     const setUserProfile = async () => {
@@ -23,6 +25,7 @@ const Home = ({ setSquawks, squawks, user, setUser, token }) => {
       const profileSquawks = homeSquawks.filter((squawk) => {
         return following.includes(squawk.userId) || squawk.userId === user.id;
       });
+      profileSquawks.reverse()
       setSquawks(profileSquawks);
     };
     getFeedSquawks();
@@ -33,15 +36,26 @@ const Home = ({ setSquawks, squawks, user, setUser, token }) => {
       <form
         onSubmit={async (event) => {
           event.preventDefault();
-          const { squawk } = await createSquawk(squawkContent, token);
-          setSquawks([...squawks, squawk]);
+          const { squawk } = await createSquawk(squawkContent, squawkPicture, token);
+          setSquawks([squawk, ...squawks]);
           setSquawkContent("");
+          setSquawkPicture("")
         }}
       >
         <input
           value={squawkContent}
           onChange={(event) => setSquawkContent(event.target.value)}
         ></input>
+        <input
+            name="squawkPicture"
+            type="file"
+            accept="image/*"
+            id="squawkPic"
+            onChange={(event) => {
+              const [file] = squawkPic.files
+              setSquawkPicture(URL.createObjectURL(file))
+            }}
+          ></input>
         <button type="submit" disabled={squawkContent ? false : true}>
           Squawk
         </button>
@@ -69,6 +83,7 @@ const Home = ({ setSquawks, squawks, user, setUser, token }) => {
                         <span className="material-icons post__badge"> </span>@
                         {squawk.author?.username}
                       </span>
+                      <span> {timeAgo(squawk.createdAt, 'twitter')}</span>
                     </h3>
                   </div>
                   <div className="post__headerDescription">

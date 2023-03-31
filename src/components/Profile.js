@@ -7,6 +7,7 @@ import {
   updateUser,
 } from "../axios-services";
 import { useParams, useNavigate } from "react-router-dom";
+const timeAgo = require("node-time-ago");
 
 const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
   const { username } = useParams();
@@ -49,6 +50,7 @@ const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
       const profileSquawks = squawks.filter(
         (squawk) => squawk.author.username === username
       );
+      profileSquawks.reverse()
       setSquawks(profileSquawks);
     };
     getProfileSquawks();
@@ -119,6 +121,7 @@ const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
                           <span className="material-icons post__badge"> </span>@
                           {squawk.author.username}
                         </span>
+                        <span> {timeAgo(squawk.createdAt, 'twitter')}</span>
                       </h3>
                     </div>
                     <div className="post__headerDescription">
@@ -176,7 +179,6 @@ const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
           <label htmlFor="profilePicture">Profile Picture</label>
           <input
             name="profilePicture"
-            placeholder="Profile Picture"
             type="file"
             accept="image/*"
             id="profileInput"

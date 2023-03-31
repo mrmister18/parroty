@@ -48,6 +48,7 @@ async function buildTables() {
       "squawkContent" TEXT,
       picture TEXT,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      "postedAt" VARCHAR(255) DEFAULT TO_CHAR(CURRENT_TIMESTAMP, 'Month, DD YYYY HH12:MI'),
       edited BOOLEAN DEFAULT FALSE
     );
     
@@ -56,7 +57,8 @@ async function buildTables() {
       "squawkId" INTEGER REFERENCES squawks(id),
       "userId" INTEGER REFERENCES users(id),
       "commentContent" TEXT NOT NULL,
-      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      "postedAt" VARCHAR(255) DEFAULT TO_CHAR(CURRENT_TIMESTAMP, 'Month, DD YYYY HH12:MI')
     );
     
     CREATE TABLE messages (
@@ -64,7 +66,8 @@ async function buildTables() {
       sender INTEGER REFERENCES users(id),
       receiver INTEGER REFERENCES users(id),
       "messageContent" TEXT NOT NULL,
-      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      "postedAt" VARCHAR(255) DEFAULT TO_CHAR(CURRENT_TIMESTAMP, 'Month, DD YYYY HH12:MI')
     );
     
     CREATE TABLE followers (
@@ -79,6 +82,7 @@ async function buildTables() {
       "squawkId" INTEGER REFERENCES squawks(id),
       "userId" INTEGER REFERENCES users(id),
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      "postedAt" VARCHAR(255) DEFAULT TO_CHAR(CURRENT_TIMESTAMP, 'Month, DD YYYY HH12:MI'),
       UNIQUE ("userId", "squawkId")
     );
     

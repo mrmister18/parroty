@@ -170,11 +170,12 @@ export async function updateUser({ name, bio, profilePicture, userId, token }) {
   }
 }
 
-export async function createSquawk(squawkContent, token) {
+export async function createSquawk(squawkContent, picture, token) {
   try {
     const { data } = await axios.post(
       baseurl + `squawks`,
-      { squawkContent },
+      { squawkContent,
+      picture },
       {
         headers: {
           "Content-Type": "application/json",

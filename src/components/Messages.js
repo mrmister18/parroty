@@ -19,6 +19,7 @@ const Messages = ({ messages, token, setMessages }) => {
 
   return (
     <>
+    <h1>Messages</h1>
       {messages.length ? (
         <>
           {messages.map((message) => {
@@ -59,7 +60,7 @@ const Messages = ({ messages, token, setMessages }) => {
             return (
               <div key={message.id}>
                 <h3>{message.messageContent}</h3>
-                <span>{timeAgo(message.createdAt, "twitter")}</span>
+                <span>{message.postedAt}</span>
               </div>
             );
           })}
@@ -74,6 +75,10 @@ const Messages = ({ messages, token, setMessages }) => {
               );
               setConversation([...conversation, createdMessage]);
               setMessage("");
+              let index = messages.findIndex(message => message.name === recipient.name)
+              let copy = [...messages]
+              copy[index].conversation.push(createdMessage)
+              setMessages(copy)
             }}
           >
             <input

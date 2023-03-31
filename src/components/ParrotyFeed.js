@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getSquawks } from "../axios-services";
 import { useNavigate } from "react-router-dom";
+const timeAgo = require("node-time-ago");
 
 const ParrotyFeed = ({ squawks, setSquawks }) => {
   const navigate = useNavigate();
   useEffect(() => {
     const getParrotySquawks = async () => {
       const squawks = await getSquawks();
+      squawks.reverse()
       setSquawks(squawks);
     };
     getParrotySquawks();
@@ -14,6 +16,7 @@ const ParrotyFeed = ({ squawks, setSquawks }) => {
 
   return (
     <div className="app-container">
+      <h1>Explore</h1>
       {squawks.map((squawk) => {
         return (
           <div
@@ -36,6 +39,7 @@ const ParrotyFeed = ({ squawks, setSquawks }) => {
                       <span className="material-icons post__badge"> </span>@
                       {squawk.author.username}
                     </span>
+                    <span> {timeAgo(squawk.createdAt, 'twitter')}</span>
                   </h3>
                 </div>
                 <div className="post__headerDescription">

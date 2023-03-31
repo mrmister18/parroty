@@ -42,6 +42,7 @@ const Squawk = ({ token, user }) => {
           <div className="post__headerDescription">
             <p>{squawk.squawkContent}</p>
           </div>
+          <div>{squawk.postedAt}</div>
         </div>
         <img src={squawk.picture ? squawk.picture : null} alt="" />
         <div className="post__footer">
