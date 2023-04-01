@@ -9,7 +9,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 const timeAgo = require("node-time-ago");
 
-const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
+const Profile = ({ squawks, setSquawks, user, token, setUser, setRecipient, setConversation }) => {
   const { username } = useParams();
   const [profile, setProfile] = useState({});
   const [name, setName] = useState("");
@@ -35,6 +35,20 @@ const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
     });
     setProfile(data.updatedUser);
     setUser(data.updatedUser);
+  }
+
+  function messageUser() {
+    let messageRecipient = user.messages.find(message => message.username === username)
+    if (messageRecipient) {
+      setRecipient(messageRecipient)
+      setConversation(messageRecipient.conversation)
+    } else {setRecipient({username: profile.username,
+    name: profile.name,
+    profilePicture: profile.profilePicture,
+  userId: profile.id,
+conversation: []})
+setConversation([])}
+navigate("/messages")
   }
 
   useEffect(() => {
@@ -70,7 +84,7 @@ const Profile = ({ squawks, setSquawks, user, token, setUser }) => {
           <button onClick={openForm}>Edit Profile</button>
         ) : (
           <>
-            <button>Message</button>{" "}
+            <button onClick={messageUser}>Message</button>{" "}
             {user.id && user?.following.find((person) => person.userId === profile.id) ? (
               <button
                 onClick={async () => {

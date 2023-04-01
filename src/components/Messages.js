@@ -3,9 +3,7 @@ const timeAgo = require("node-time-ago");
 import { getUser, sendMessage } from "../axios-services";
 import { useNavigate } from "react-router-dom";
 
-const Messages = ({ messages, token, setMessages }) => {
-  const [conversation, setConversation] = useState([]);
-  const [recipient, setRecipient] = useState({});
+const Messages = ({ messages, token, setMessages, conversation, setConversation, recipient, setRecipient }) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -47,7 +45,7 @@ const Messages = ({ messages, token, setMessages }) => {
       ) : (
         <h1>No active conversations</h1>
       )}
-      {conversation?.length ? (
+      {recipient.username ? (
         <>
           <h1
             onClick={() => {
@@ -56,6 +54,7 @@ const Messages = ({ messages, token, setMessages }) => {
           >
             {recipient.name} @{recipient.username}
           </h1>
+          {conversation?.length ? <>
           {conversation.map((message) => {
             return (
               <div key={message.id}>
@@ -63,7 +62,7 @@ const Messages = ({ messages, token, setMessages }) => {
                 <span>{message.postedAt}</span>
               </div>
             );
-          })}
+          })}</> : null}
           <br />
           <form
             onSubmit={async (event) => {
@@ -77,7 +76,11 @@ const Messages = ({ messages, token, setMessages }) => {
               setMessage("");
               let index = messages.findIndex(message => message.name === recipient.name)
               let copy = [...messages]
-              copy[index].conversation.push(createdMessage)
+              if (index >= 0) {
+              copy[index]?.conversation.push(createdMessage)}
+              else {let recipientCopy = {...recipient}
+              recipientCopy.conversation.push(createdMessage)
+                copy.push(recipientCopy)}
               setMessages(copy)
             }}
           >

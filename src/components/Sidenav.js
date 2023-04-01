@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerNewUser, userLogin } from "../axios-services";
 
-const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
+const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, setConversation }) => {
   const [registering, setRegistering] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,6 +38,8 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages }) => {
             onClick={() => {
               setToken("");
               setMessages([]);
+              setConversation([])
+              setRecipient({})
               setUser({});
               navigate("/");
             }}

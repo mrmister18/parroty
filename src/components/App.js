@@ -21,6 +21,8 @@ const App = () => {
   );
   const [squawks, setSquawks] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [conversation, setConversation] = useState([]);
+  const [recipient, setRecipient] = useState({});
 
   useEffect(() => {
     window.localStorage.setItem("token", token);
@@ -60,6 +62,8 @@ const App = () => {
         user={user}
         setUser={setUser}
         setMessages={setMessages}
+        setRecipient={setRecipient}
+        setConversation={setConversation}
       />
       <div className="main">
         <Routes>
@@ -70,6 +74,10 @@ const App = () => {
                 token={token}
                 messages={messages}
                 setMessages={setMessages}
+                conversation={conversation}
+                setConversation={setConversation}
+                recipient={recipient}
+                setRecipient={setRecipient}
               />
             }
           ></Route>
@@ -86,6 +94,8 @@ const App = () => {
                 user={user}
                 token={token}
                 setUser={setUser}
+                setRecipient={setRecipient}
+                setConversation={setConversation}
               />
             }
           ></Route>
