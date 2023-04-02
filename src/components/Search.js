@@ -1,24 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks } from "../axios-services";
-import { useNavigate } from "react-router-dom";
+import { getSquawks, getUsers } from "../axios-services";
+import { useNavigate, useParams } from "react-router-dom";
 const timeAgo = require("node-time-ago");
 
-const ParrotyFeed = ({ squawks, setSquawks }) => {
+const Search = ({squawks, setSquawks, users, setUsers}) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("")
+  const { searchTerm } = useParams()
 
   useEffect(() => {
     const getParrotySquawks = async () => {
       const squawks = await getSquawks();
       squawks.reverse()
-      setSquawks(squawks);
+      const filter = squawks.filter((squawk) => {
+        const ref = searchTerm.toLowerCase()
+        const squawkText = squawk.squawkContent.toLowerCase()
+        const username = squawk.author.username.toLowerCase()
+        const name = squawk.author.name.toLowerCase()
+        return squawkText.includes(ref) || username.includes(ref) || name.includes(ref)})
+      setSquawks(filter);
     };
     getParrotySquawks();
+
+    const getParrotyUsers = async () => {
+        const users = await getUsers();
+        setUsers(users);
+      };
+      getParrotyUsers();
   }, []);
 
   return (
     <div className="app-container">
-      <h1>Explore</h1>
+      <h1>Search</h1>
       <form onSubmit={() => {navigate(`/search/${searchText}`)}}>
       <input value={searchText} onChange={(event) => setSearchText(event.target.value)}></input>
       <button type="submit" disabled={searchText ? false : true}>Search</button>
@@ -75,4 +88,4 @@ const ParrotyFeed = ({ squawks, setSquawks }) => {
   );
 };
 
-export default ParrotyFeed;
+export default Search;

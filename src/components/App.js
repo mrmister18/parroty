@@ -11,6 +11,7 @@ import Messages from "./Messages";
 import Profile from "./Profile";
 import Home from "./Home";
 import Squawk from "./Squawk";
+import Search from "./Search";
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -114,6 +115,10 @@ const App = () => {
           <Route
             path="/:username/:squawkId"
             element={<Squawk token={token} user={user} />}
+          ></Route>
+          <Route
+            path="/search/:searchTerm"
+            element={<Search users={users} setUsers={setUsers} squawks={squawks} setSquawks={setSquawks} />}
           ></Route>
         </Routes>
       </div>
