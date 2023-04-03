@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 const Squawk = ({ token, user }) => {
   const [squawk, setSquawk] = useState({});
   const [commentContent, setCommentContent] = useState("");
-  const { squawkId } = useParams();
+  const { squawkId, username } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,8 +18,8 @@ const Squawk = ({ token, user }) => {
     };
     fetchSquawk();
   }, []);
-  return (
-    <div className="post" key={`${squawk.id}`}>
+  return (<>
+    {squawk?.id && squawk.author.username === username ? <div className="post" key={`${squawk.id}`}>
       <div className="post__avatar">
         <img src={squawk.author?.profilePicture} alt="" />
       </div>
@@ -132,7 +132,7 @@ const Squawk = ({ token, user }) => {
             })
           : null}
       </div>
-    </div>
+    </div> : <h1>This squawk does not exist</h1>}</>
   );
 };
 

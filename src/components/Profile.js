@@ -71,7 +71,7 @@ navigate("/messages")
   }, []);
   return (
     <>
-      <div>
+      {profile.id ? <><div>
         <img src={`${profile.profilePicture}`}></img>
         <div>{profile.name}</div>
         <div>@{profile.username}</div>
@@ -206,7 +206,7 @@ navigate("/messages")
             Close
           </button>
         </form>
-      </div>
+      </div></> : <h1>This account does not exist</h1>}
     </>
   );
 };
