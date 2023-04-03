@@ -6,6 +6,7 @@ const timeAgo = require("node-time-ago");
 const Search = ({squawks, setSquawks, users, setUsers}) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("")
+  const [squawkSearch, setSquawkSearch] = useState(true)
   const { searchTerm } = useParams()
 
   useEffect(() => {
@@ -23,8 +24,13 @@ const Search = ({squawks, setSquawks, users, setUsers}) => {
     getParrotySquawks();
 
     const getParrotyUsers = async () => {
-        const users = await getUsers();
-        setUsers(users);
+        const parrotyUsers = await getUsers();
+        const filter = parrotyUsers.filter((user) => {
+          const ref = searchTerm.toLowerCase()
+          const username = user.username.toLowerCase()
+          const name = user.name.toLowerCase()
+          return username.includes(ref) || name.includes(ref)})
+        setUsers(filter);
       };
       getParrotyUsers();
   }, []);
@@ -36,7 +42,8 @@ const Search = ({squawks, setSquawks, users, setUsers}) => {
       <input value={searchText} onChange={(event) => setSearchText(event.target.value)}></input>
       <button type="submit" disabled={searchText ? false : true}>Search</button>
       </form>
-      {squawks.map((squawk) => {
+      <button onClick={() => {setSquawkSearch(true)}}>Latest</button><button onClick={() => {setSquawkSearch(false)}}>Users</button>
+      {squawkSearch ? squawks.map((squawk) => {
         return (
           <div
             className="post"
@@ -83,6 +90,11 @@ const Search = ({squawks, setSquawks, users, setUsers}) => {
             </div>
           </div>
         );
+      }) : users.map((user) => {
+        return <div onClick={() => {navigate(`/${user.username}`)}}>
+          {user.name} @{user.username}
+          <div>{user.bio}</div>
+        </div>
       })}
     </div>
   );
