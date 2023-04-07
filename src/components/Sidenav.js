@@ -11,10 +11,12 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
 
   function closeForm() {
     document.getElementById("myForm").style.display = "none";
+    document.getElementById("background").style.display = "none";
   }
 
   function openForm() {
-    document.getElementById("myForm").style.display = "block";
+    document.getElementById("myForm").style.display = "flex";
+    document.getElementById("background").style.display = "flex";
   }
 
   async function loggingIn() {
@@ -67,6 +69,8 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
           </>
         )}
       </div>
+      <div id="background">
+        </div>
       <div className="popup" id="myForm">
         <form
           onSubmit={(event) => {
@@ -75,9 +79,10 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
             setUsername("");
             setPassword("");
           }}
+          className="nav-form"
         >
-          {registering ? <h1>Register</h1> : <h1>Login</h1>}
-          <label htmlFor="username">Username</label>
+          <div className="popup-head"><div className="close" onClick={closeForm}>&times;</div></div>
+          {registering ? <h1>Join Parroty today</h1> : <h1>Sign in to Parroty</h1>}
           <input
             name="username"
             placeholder="Username"
@@ -87,7 +92,6 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
             }}
             required
           ></input>
-          <label htmlFor="password">Password</label>
           <input
             name="password"
             type="password"
@@ -100,7 +104,6 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
           ></input>
           {registering ? (
             <>
-              <label htmlFor="name">Name</label>
               <input
                 name="name"
                 placeholder="Name"
@@ -114,14 +117,11 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
           ) : null}
           {registering ? (
             <><button type="submit">Register</button>
-            <h4>Have an account already? <button onClick={() => {setRegistering(false)}}>Login Here!</button></h4></>
+            <h4>Have an account already? <span class="pop-switch" onClick={() => {setRegistering(false)}}>Login Here!</span></h4></>
           ) : (
             <><button type="submit">Login</button>
-            <h4>Don't have an account? <button onClick={() => {setRegistering(true)}}>Register Here!</button></h4></>
+            <h4>Don't have an account? <span class="pop-switch" onClick={() => {setRegistering(true)}}>Register Here!</span></h4></>
           )}
-          <button type="button" onClick={closeForm}>
-            Close
-          </button>
         </form>
       </div>
     </>
