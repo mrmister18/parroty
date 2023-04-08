@@ -19,8 +19,10 @@ body {
 .sidenav {
   height: 100%;
   position: fixed;
-  background-color: chartreuse;
+  background-color: white;
   min-width: 250px;
+  margin-left: 10%;
+  border-right: 1px #e6ecf0 solid;
 }
 
 .sidenav a, button {
@@ -54,7 +56,9 @@ body {
 }
 
 .main {
-  margin-left: 250px;
+  margin-left: 30%;
+  display: flex;
+  flex-direction: column;
 }
 
 .close {
@@ -118,4 +122,29 @@ input {
   height: 34px;
   cursor: pointer;
   font-weight: 700;
+}
+
+.sidebar-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 20px;
+  font-weight: 800;
+  font-size: 20px;
+  margin-right: 20px;
+  height: 15px;
+}
+
+.sidebar-option:hover {
+  background-color: #e6ecf0;
+  border-radius: 30px;
+  transition: color 100ms ease-out;
+}
+
+.post:hover {
+  background-color: #e6ecf0;
+}
+
+.post {
+  width: 566px;
 }

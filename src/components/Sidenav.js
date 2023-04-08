@@ -31,41 +31,35 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
   return (
     <>
       <div className="sidenav">
-        {token && <Link to="/home">Home</Link>}
-        <Link to="/">Explore</Link>
-        {token && <Link to="/messages">Messages</Link>}
-        {user.username && <Link to={user.username}>Profile</Link>}
+        {token && <div onClick={() => navigate("/home")} className="sidebar-option"><h2>Home</h2></div>}
+        <div className="sidebar-option" onClick={() => navigate("/")}><h2>Explore</h2></div>
+        {token && <div className="sidebar-option" onClick={() => navigate("/messages")}><h2>Messages</h2></div>}
+        {user.username && <div onClick={() => navigate(`/${user.username}`)} className="sidebar-option"><h2>Profile</h2></div>}
         {token ? (
-          <button
-            onClick={() => {
-              setToken("");
-              setMessages([]);
-              setConversation([])
-              setRecipient({})
-              setUser({});
-              navigate("/");
-            }}
-          >
+          <div onClick={() => {
+            setToken("");
+            setMessages([]);
+            setConversation([])
+            setRecipient({})
+            setUser({});
+            navigate("/");
+          }} className="sidebar-option"><h2>
             Logout
-          </button>
+          </h2></div>
         ) : (
           <>
-            <button
-              onClick={() => {
+          <div onClick={() => {
                 setRegistering(false);
                 openForm();
-              }}
-            >
+              }} className="sidebar-option"><h2>
               Login
-            </button>
-            <button
-              onClick={() => {
+            </h2></div>
+            <div className="sidebar-option" onClick={() => {
                 setRegistering(true);
                 openForm();
-              }}
-            >
+              }}><h2>
               Sign Up
-            </button>
+            </h2></div>
           </>
         )}
       </div>
