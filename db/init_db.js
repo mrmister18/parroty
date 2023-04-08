@@ -38,7 +38,7 @@ async function buildTables() {
       password VARCHAR(255) NOT NULL,
       name VARCHAR(255) NOT NULL,
       bio TEXT,
-      "profilePicture" TEXT,
+      "profilePicture" TEXT DEFAULT 'https://cvhrma.org/wp-content/uploads/2015/07/default-profile-photo.jpg',
       admin BOOLEAN DEFAULT FALSE
     );
     

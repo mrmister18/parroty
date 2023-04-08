@@ -56,7 +56,7 @@ const App = () => {
     setUserProfile();
   }, []);
   return (
-    <>
+    <div id="page">
       <Sidenav
         token={token}
         setToken={setToken}
@@ -122,7 +122,7 @@ const App = () => {
           ></Route>
         </Routes>
       </div>
-    </>
+    </div>
   );
 };
 
