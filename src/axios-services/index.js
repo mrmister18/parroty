@@ -59,6 +59,7 @@ export async function registerNewUser({ username, password, name }) {
       }
     );
     document.getElementById("myForm").style.display = "none";
+    document.getElementById("background").style.display = "none";
     return data;
   } catch (error) {
     console.log(error);
@@ -78,6 +79,7 @@ export async function userLogin({ username, password }) {
       }
     );
     document.getElementById("myForm").style.display = "none";
+    document.getElementById("background").style.display = "none";
     return data;
   } catch (error) {
     console.log(error);

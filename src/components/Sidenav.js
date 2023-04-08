@@ -73,12 +73,6 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
         </div>
       <div className="popup" id="myForm">
         <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            registering ? registeringUser() : loggingIn();
-            setUsername("");
-            setPassword("");
-          }}
           className="nav-form"
         >
           <div className="popup-head"><div className="close" onClick={closeForm}>&times;</div></div>
@@ -116,10 +110,20 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
             </>
           ) : null}
           {registering ? (
-            <><button type="submit">Register</button>
+            <><div class="submit" onClick={(event) => {
+              event.preventDefault();
+              registering ? registeringUser() : loggingIn();
+              setUsername("");
+              setPassword("");
+            }}>Register</div>
             <h4>Have an account already? <span class="pop-switch" onClick={() => {setRegistering(false)}}>Login Here!</span></h4></>
           ) : (
-            <><button type="submit">Login</button>
+            <><div class="submit" onClick={(event) => {
+              event.preventDefault();
+              registering ? registeringUser() : loggingIn();
+              setUsername("");
+              setPassword("");
+            }}>Login</div>
             <h4>Don't have an account? <span class="pop-switch" onClick={() => {setRegistering(true)}}>Register Here!</span></h4></>
           )}
         </form>
