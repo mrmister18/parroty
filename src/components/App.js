@@ -79,6 +79,7 @@ const App = () => {
                 setConversation={setConversation}
                 recipient={recipient}
                 setRecipient={setRecipient}
+                user={user}
               />
             }
           ></Route>

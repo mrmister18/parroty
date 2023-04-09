@@ -19,7 +19,7 @@ const Squawk = ({ token, user }) => {
     fetchSquawk();
   }, []);
   return (<>
-  <h1>Squawk</h1>
+  <h1 className="title">Squawk</h1>
     {squawk?.id && squawk.author.username === username ? <div key={`${squawk.id}`}>
       <div className="post__avatar">
         <img src={squawk.author?.profilePicture} alt="" />

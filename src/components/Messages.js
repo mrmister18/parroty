@@ -3,7 +3,7 @@ const timeAgo = require("node-time-ago");
 import { getUser, sendMessage } from "../axios-services";
 import { useNavigate } from "react-router-dom";
 
-const Messages = ({ messages, token, setMessages, conversation, setConversation, recipient, setRecipient }) => {
+const Messages = ({ messages, token, setMessages, conversation, setConversation, recipient, setRecipient, user }) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -14,30 +14,34 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
     };
     setUserMessages();
   }, []);
-
   return (
     <>
-    <h1>Messages</h1>
+    <div className="convos">
+    <div className="conversation-list">
+    <h1 className="title">Messages</h1>
       {messages.length ? (
         <>
           {messages.map((message) => {
             return (
               <div
+              className="conversation-block"
                 onClick={() => {
                   setConversation(message.conversation);
                   setRecipient(message);
                 }}
               >
-                {message.name} {`@${message.username}`}{" "}
+                <h3
+                    className="author-name">
+                      {message.name}
+                      <span className="post__headerSpecial">
+                        <span className="material-icons post__badge"> </span>@
+                        {message.username} · {timeAgo(message.conversation[message.conversation.length - 1]
+                    .createdAt, "twitter")}</span>
+                    </h3>
                 {
                   message.conversation[message.conversation.length - 1]
                     .messageContent
                 }{" "}
-                {timeAgo(
-                  message.conversation[message.conversation.length - 1]
-                    .createdAt,
-                  "twitter"
-                )}
               </div>
             );
           })}
@@ -45,9 +49,12 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
       ) : (
         <h1>No active conversations</h1>
       )}
+      </div>
+      <div className="active-conversation">
       {recipient.username ? (
         <>
           <h1
+          className="recipient"
             onClick={() => {
               navigate(`/${recipient.username}`);
             }}
@@ -56,11 +63,14 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
           </h1>
           {conversation?.length ? <>
           {conversation.map((message) => {
-            return (
-              <div key={message.id}>
+            console.log(message.receiver, user.id)
+            return (<>
+              <div key={message.id}
+              className={message.receiver === user.id ? "received message" : "sent message"}>
                 <h3>{message.messageContent}</h3>
-                <span>{message.postedAt}</span>
               </div>
+                <div>{message.postedAt}</div>
+                </>
             );
           })}</> : null}
           <br />
@@ -87,6 +97,7 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
             <input
               value={message}
               onChange={(event) => setMessage(event.target.value)}
+              placeholder="Start a new message"
             ></input>
             <button type="submit" disabled={message ? false : true}>
               Send
@@ -94,6 +105,8 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
           </form>
         </>
       ) : null}
+      </div>
+      </div>
     </>
   );
 };

@@ -129,13 +129,12 @@ navigate("/messages")
                 <div className="post__body">
                   <div className="post__header">
                     <div className="post__headerText">
-                      <h3>
+                      <h3
+                      className="author-name">
                         {squawk.author.name}
                         <span className="post__headerSpecial">
                           <span className="material-icons post__badge"> </span>@
-                          {squawk.author.username}
-                        </span>
-                        <span> {timeAgo(squawk.createdAt, 'twitter')}</span>
+                        {squawk.author.username} · {timeAgo(squawk.createdAt, "twitter")}</span>
                       </h3>
                     </div>
                     <div className="post__headerDescription">
