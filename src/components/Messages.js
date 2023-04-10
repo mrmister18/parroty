@@ -53,26 +53,27 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
       <div className="active-conversation">
       {recipient.username ? (
         <>
-          <h1
+          <div
           className="recipient"
             onClick={() => {
               navigate(`/${recipient.username}`);
             }}
           >
-            {recipient.name} @{recipient.username}
-          </h1>
+            <img src={recipient.profilePicture} alt="" className="recipient-pic"></img>
+            <div className="recipient-name">{recipient.name}</div> 
+            <div className="recipient-username">@{recipient.username}</div>
+          </div>
           {conversation?.length ? <>
           {conversation.map((message) => {
-            console.log(message.receiver, user.id)
             return (<>
               <div key={message.id}
               className={message.receiver === user.id ? "received message" : "sent message"}>
-                <h3>{message.messageContent}</h3>
+                <div>{message.messageContent}</div>
               </div>
-                <div>{message.postedAt}</div>
+                <div className={message.receiver === user.id ? "received-time message-time" : "sent-time message-time"}>{message.postedAt}</div>
                 </>
             );
-          })}</> : null}
+          })}</> : <div>Select a Message</div>}
           <br />
           <form
             onSubmit={async (event) => {

@@ -163,12 +163,12 @@ input {
   background-size: contain;
 }
 
-.author-name {
+.author-name, .recipient-name {
   font-weight: 700;
   font-size: 15px;
 }
 
-.post__headerSpecial {
+.post__headerSpecial, .recipient-username {
   font-weight: 400;
   color: #536471;
 }
@@ -198,16 +198,24 @@ input {
   overflow-y: auto;
   min-width: 500px;
   max-width: 567px;
+  display: flex;
+  flex-direction: column;
 }
 
 .recipient {
   cursor: pointer;
+  border-bottom: 1px #e6ecf0 solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 15px;
 }
 
 .message {
   font-size: 15px;
   padding: 16px 12px;
-  margin-bottom: 24px;
   border-top-left-radius: 9999px;
   border-top-right-radius: 9999px;
 }
@@ -224,4 +232,25 @@ input {
   color: rgb(88, 93, 96);
   border-bottom-right-radius: 9999px;
   border-bottom-left-radius: 4px;
+}
+
+.message-time {
+  color: #536471;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.received-time, .received {
+  align-self: flex-start;
+}
+
+.sent-time, .sent {
+  align-self: flex-end;
+}
+
+.recipient-pic {
+  border-radius: 50%;
+  height: 64px;
+  width: 64px;
+  background-size: contain;
 }
