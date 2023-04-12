@@ -95,14 +95,16 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
               setMessages(copy)
             }}
           >
-            <input
+            <div className="message-input-div"><input
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               placeholder="Start a new message"
+              className="message-input"
             ></input>
-            <button type="submit" disabled={message ? false : true}>
+            <button className="message-button" type="submit" disabled={message ? false : true}>
               Send
             </button>
+            </div>
           </form>
         </>
       ) : null}
