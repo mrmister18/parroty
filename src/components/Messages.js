@@ -50,6 +50,7 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
         <h1>No active conversations</h1>
       )}
       </div>
+      <div className="right-side">
       <div className="active-conversation">
       {recipient.username ? (
         <>
@@ -75,7 +76,10 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
             );
           })}</> : <div>Select a Message</div>}
           <br />
-          <form
+        </>
+      ) : null}
+      </div>
+          {recipient.username ? <form
             onSubmit={async (event) => {
               event.preventDefault();
               const { createdMessage } = await sendMessage(
@@ -94,6 +98,7 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
                 copy.push(recipientCopy)}
               setMessages(copy)
             }}
+            className="message-form"
           >
             <div className="message-input-div"><input
               value={message}
@@ -105,9 +110,7 @@ const Messages = ({ messages, token, setMessages, conversation, setConversation,
               Send
             </button>
             </div>
-          </form>
-        </>
-      ) : null}
+          </form> : null}
       </div>
       </div>
     </>

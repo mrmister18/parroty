@@ -112,7 +112,7 @@ const Sidenav = ({ token, setToken, user, setUser, setMessages, setRecipient, se
             }}>Register</div>
             <h4>Have an account already? <span class="pop-switch" onClick={() => {setRegistering(false)}}>Login Here!</span></h4></>
           ) : (
-            <><div class="submit" onClick={(event) => {
+            <><div className="submit" onClick={(event) => {
               event.preventDefault();
               registering ? registeringUser() : loggingIn();
               setUsername("");
