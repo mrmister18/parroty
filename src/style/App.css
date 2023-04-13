@@ -184,6 +184,7 @@ input {
   display: flex;
   height: 100%;
   align-items: stretch;
+  margin-top: 53px;
 }
 
 .title {
@@ -222,6 +223,7 @@ input {
   padding-bottom: 20px;
   font-size: 15px;
   margin-bottom: 16px;
+  color: #0F1419;
 }
 
 .message {
@@ -301,4 +303,14 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.recipient-username {
+  margin-bottom: 12px;
+}
+
+.button-image {
+  background-color: pink;
+  color: green;
+  font-size: large;
 }

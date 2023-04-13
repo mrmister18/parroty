@@ -43,6 +43,7 @@ async function getAllMessagesByUser(userId) {
             name: user.name,
             profilePicture: user.profilePicture,
             userId: user.id,
+            bio: user.bio,
           conversation: chats[Object.keys(chats)[i]]}) 
         }
     return output
