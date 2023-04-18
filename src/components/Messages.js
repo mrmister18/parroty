@@ -114,11 +114,11 @@ const Messages = ({
                     })}
                   </>
                 ) : (
-                  <div>Select a Message</div>
+                  null
                 )}
                 <br />
               </>
-            ) : null}
+            ) : <h1>Select a message</h1>}
           </div>
           {recipient.username ? (
             <form
