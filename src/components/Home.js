@@ -44,6 +44,7 @@ const Home = ({ setSquawks, squawks, user, setUser, token }) => {
       >
         <input
           value={squawkContent}
+          placeholder="What's happening?"
           onChange={(event) => setSquawkContent(event.target.value)}
         ></input>
         <input
@@ -56,9 +57,9 @@ const Home = ({ setSquawks, squawks, user, setUser, token }) => {
               setSquawkPicture(URL.createObjectURL(file))
             }}
           ></input>
-        <button type="submit" disabled={squawkContent ? false : true}>
+        <span className={squawkContent ? "squawk-button enabled-squawk" : "squawk-button disabled"}>
           Squawk
-        </button>
+        </span>
       </form>
       {squawks.map((squawk) => {
         return (
