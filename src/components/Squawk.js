@@ -46,14 +46,12 @@ const Squawk = ({ token, user }) => {
           <div>{squawk.postedAt}</div>
         </div>
         <img src={squawk.picture ? squawk.picture : null} alt="" />
-        <div className="post__footer">
+        <div>
           <span className="material-icons">
-            {" "}
-            Parrots: {squawk.parrots?.length}{" "}
+            <strong>{squawk.parrots?.length}</strong> Parrots {" "}
           </span>
           <span className="material-icons">
-            {" "}
-            Likes: {squawk.likes?.length}{" "}
+            <strong>{squawk.likes?.length}</strong> Likes
           </span>
         </div>
       </div>
@@ -104,32 +102,84 @@ const Squawk = ({ token, user }) => {
               </button>
             )}
       <div>
-        <form
+        {user.username && <form
+        className="squawk-form"
           onSubmit={async (event) => {
             event.preventDefault();
+            if (!commentContent) {return}
             const { comment } = await createComment(
               squawk.id,
               commentContent,
               token
             );
+            comment.username = user.username;
             let update = { ...squawk };
             update.comments.push(comment);
             setSquawk(update);
             setCommentContent("");
           }}
         >
-          <input
-            value={commentContent}
-            onChange={(event) => setCommentContent(event.target.value)}
-          ></input>
-          <button type="submit" disabled={commentContent ? false : true}>
-            Post Comment
-          </button>
-        </form>
-        <p>Comments:</p>
+          <div className="squawk-form-top">
+        <div className="post__avatar">
+                <img src={user?.profilePicture} alt="" />
+              </div>
+        <input
+          value={commentContent}
+          className="squawk-input"
+          placeholder="Leave a comment"
+          onChange={(event) => setCommentContent(event.target.value)}
+        ></input>
+        </div>
+        <div className="squawk-controls">
+        <span className={commentContent ? "squawk-button enabled-squawk" : "squawk-button disabled"}
+        onClick={async (event) => {
+          event.preventDefault();
+          if (!commentContent) {return}
+          const { comment } = await createComment(
+            squawk.id,
+            commentContent,
+            token
+          );
+          comment.username = user.username;
+          let update = { ...squawk };
+          update.comments.push(comment);
+          setSquawk(update);
+          setCommentContent("");
+        }}>
+          Comment
+        </span>
+        </div>
+        </form>}
         {squawk.comments?.length
           ? squawk?.comments.map((comment) => {
-              return <div>{comment.commentContent}</div>;
+              return <div
+              className="post"
+              key={comment.id}
+              onClick={() => {
+                navigate(`/${comment.username}`);
+              }}
+            >
+              <div className="post__avatar">
+                <img src={comment.profilePicture} alt="" />
+              </div>
+
+              <div className="post__body">
+                <div className="post__header">
+                  <div className="post__headerText">
+                    <h3
+                    className="author-name">
+                      {comment?.name}
+                      <span className="post__headerSpecial">
+                        <span className="material-icons post__badge"> </span>@
+                        {comment.username} · {comment.postedAt}</span>
+                    </h3>
+                  </div>
+                  <div className="post__headerDescription">
+                    <p>{comment.commentContent}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
             })
           : null}
       </div>

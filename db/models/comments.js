@@ -22,7 +22,9 @@ async function createComment({
 
 async function getCommentsBySquawkId(squawkId) {
     const { rows } = await client.query(`
-        SELECT * FROM comments
+        SELECT comments.id, comments."squawkId", comments."userId", comments."commentContent", comments."createdAt", comments."postedAt", users.username, users."profilePicture", users.name
+        FROM comments
+        JOIN users ON comments."userId" = users.id
         WHERE "squawkId" = ($1);
     `, [squawkId])
     return rows
