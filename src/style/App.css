@@ -112,10 +112,12 @@ h4 {
 
 input {
   margin: 5px;
-  padding: 5px;
+  padding: 12px;
   font-size: 15px;
   border-radius: 9999px;
   background-color: rgb(239, 243, 244);
+  width: 43%;
+  border: none;
 }
 
 .submit {
@@ -154,6 +156,7 @@ input {
   border: 1px #e6ecf0 solid;
   cursor: pointer;
   padding: 16px;
+  overflow-wrap: break-word;
 }
 
 .post-list {
@@ -392,4 +395,17 @@ input[type=file] {
 .squawk-form-top {
   display: flex;
   justify-content: space-between;
+}
+
+.post-footer-icon {
+  width: 19px;
+  fill: #536471;
+  margin: 0 7px -4px 0;
+}
+
+.post__footer {
+  display: flex;
+  justify-content: space-around;
+  color: #536471;
+  font-size: 14px;
 }
