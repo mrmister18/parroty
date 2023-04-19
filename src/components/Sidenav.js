@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerNewUser, userLogin } from "../axios-services";
+import { registerNewUser, userLogin, getUser } from "../axios-services";
 
 const Sidenav = ({
   token,
@@ -30,11 +30,15 @@ const Sidenav = ({
   async function loggingIn() {
     const data = await userLogin({ username, password });
     setToken(data.token);
+    const userProfile = await getUser(data.token);
+      setUser(userProfile);
   }
 
   async function registeringUser() {
     const data = await registerNewUser({ username, password, name });
     setToken(data.token);
+    const userProfile = await getUser(data.token);
+      setUser(userProfile);
   }
   return (
     <>
