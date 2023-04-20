@@ -1,7 +1,12 @@
+html {
+  height: 100%;
+}
+
 body {
   font-family: gt system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   overflow-x: hidden;
   margin: 0;
+  height: 100%;
 }
 
 #root {
@@ -12,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  padding: 16px;
 }
 
 .app-container h1 {
@@ -88,7 +94,7 @@ body {
   z-index: 3;
 }
 
-h4 {
+h4, .username-result {
   color: #536471
 }
 
@@ -109,7 +115,7 @@ input {
   font-size: 15px;
   border-radius: 9999px;
   background-color: rgb(239, 243, 244);
-  width: 43%;
+  width: 100%;
   border: none;
 }
 
@@ -196,6 +202,7 @@ input {
   border-right: 1px #e6ecf0 solid;
   max-width: 388.4px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .active-conversation {
@@ -227,19 +234,20 @@ input {
   padding: 16px 12px;
   border-top-left-radius: 9999px;
   border-top-right-radius: 9999px;
+  overflow-wrap: break-word;
+  max-width: 70%;
+  border-radius: 24px;
 }
 
 .sent {
   background-color: rgb(29, 155, 240);
   color: white;
-  border-bottom-left-radius: 9999px;
   border-bottom-right-radius: 4px;
 }
 
 .received {
   background-color: rgb(239, 243, 244);
   color: rgb(88, 93, 96);
-  border-bottom-right-radius: 9999px;
   border-bottom-left-radius: 4px;
 }
 
@@ -371,7 +379,7 @@ input[type=file] {
   height: 35px;
 }
 
-.squawk-controls {
+.squawk-controls, .search-options {
   padding: 5px;
   display: flex;
   justify-content: space-between;
@@ -429,7 +437,7 @@ input[type=file] {
   background-color: rgba(249, 24, 128, 0.1);
 }
 
-.squawk-page {
+.squawk-page, .app-container {
   overflow-wrap: break-word;
   width: 566px;
 }
@@ -437,4 +445,33 @@ input[type=file] {
 .squawk-icons {
   display: flex;
   justify-content: space-around;
+}
+
+.search-option {
+  font-size: 15px;
+  width: 50%;
+  cursor: pointer;
+  text-align: center;
+  padding: 16px;
+  color: #536471;
+  font-weight: 500;
+}
+
+.search-option:hover {
+  background-color: rgba(15, 20, 25, 0.1);
+}
+
+.user-result {
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  padding: 16px 12px;
+}
+
+.user-result:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.user-info {
+  margin-left: 10px;
 }

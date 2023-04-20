@@ -38,10 +38,30 @@ const Search = ({squawks, setSquawks, users, setUsers}) => {
   return (
     <div className="app-container">
       <h1>Search</h1>
-      <form onSubmit={() => {navigate(`/search/${searchText}`)}}>
+      <form onSubmit={async (event) => {
+        event.preventDefault()
+        navigate(`/search/${searchText}`)
+        const parrotyUsers = await getUsers();
+        const filter1 = parrotyUsers.filter((user) => {
+          const ref = searchText.toLowerCase()
+          const username = user.username.toLowerCase()
+          const name = user.name.toLowerCase()
+          return username.includes(ref) || name.includes(ref)})
+        setUsers(filter1);
+          const squawks = await getSquawks();
+          squawks.reverse()
+          const filter = squawks.filter((squawk) => {
+            const ref = searchText.toLowerCase()
+            const squawkText = squawk.squawkContent.toLowerCase()
+            const username = squawk.author.username.toLowerCase()
+            const name = squawk.author.name.toLowerCase()
+            return squawkText.includes(ref) || username.includes(ref) || name.includes(ref)})
+          setSquawks(filter);}}>
       <input placeholder="Search Parroty" value={searchText} onChange={(event) => setSearchText(event.target.value)}></input>
       </form>
-      <button onClick={() => {setSquawkSearch(true)}}>Latest</button><button onClick={() => {setSquawkSearch(false)}}>Users</button>
+      <div className="search-options">
+      <div className="search-option" onClick={() => {setSquawkSearch(true)}}>Latest</div><div className="search-option" onClick={() => {setSquawkSearch(false)}}>Users</div>
+      </div>
       {squawkSearch ? squawks.length ? squawks.map((squawk) => {
         return (
           <div
@@ -103,10 +123,15 @@ const Search = ({squawks, setSquawks, users, setUsers}) => {
             </div>
           </div>
         );
-      }) : <h1>No results for "{searchTerm}"</h1> : users.length ? users.map((user) => {
-        return <div onClick={() => {navigate(`/${user.username}`)}}>
-          {user.name} @{user.username}
+      }) : <h1>No results for "{searchTerm}"</h1> : users?.length ? users.map((user) => {
+        return <div className="user-result" onClick={() => {navigate(`/${user.username}`)}}>
+          <div className="post__avatar">
+                <img src={user?.profilePicture} alt="" />
+              </div>
+              <div className="user-info">
+          <strong>{user.name}</strong> <div className="username-result">@{user.username}</div>
           <div>{user.bio}</div>
+        </div>
         </div>
       }) : <h1>No results for "{searchTerm}"</h1>}
     </div>
