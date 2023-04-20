@@ -23,7 +23,6 @@ const Messages = ({
     };
     setUserMessages();
   }, []);
-
   return (
     <>
       <div className="convos">
@@ -34,12 +33,18 @@ const Messages = ({
               {messages.map((message) => {
                 return (
                   <div
-                    className="conversation-block"
+                  key={message.id}
+                    className={`conversation-block ${message.conversation === conversation ? "active-block" : " "}`}
                     onClick={() => {
                       setConversation(message.conversation);
                       setRecipient(message);
                     }}
                   >
+                    <div className="conversation-block-info">
+                    <div className="post__avatar" onClick={() => navigate(`/${message.username}`)}>
+                <img src={message.profilePicture} alt="" />
+              </div>
+                    <div className="conversation-block-text">
                     <h3 className="author-name">
                       {message.name}
                       <span className="post__headerSpecial">
@@ -54,8 +59,13 @@ const Messages = ({
                     </h3>
                     {
                       message.conversation[message.conversation.length - 1]
-                        .messageContent
+                        .messageContent.length < 35 ? message.conversation[message.conversation.length - 1]
+                        .messageContent : message.conversation[message.conversation.length - 1]
+                        .messageContent.slice(0, 36) + "..."
                     }{" "}
+                    </div>
+                    </div>
+                    {message.conversation === conversation ? <span className="active-block-strip"></span> : <span className="inactive-block-strip"></span>}
                   </div>
                 );
               })}

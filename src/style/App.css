@@ -72,6 +72,7 @@ body {
 .close:hover {
   background-color: rgba(15, 20, 25, 0.1);
   border-radius: 50%;
+  transition: background-color 100ms ease-out;
 }
 
 .popup-head {
@@ -143,11 +144,12 @@ input {
 .sidebar-option:hover {
   background-color: #e6ecf0;
   border-radius: 30px;
-  transition: color 100ms ease-out;
+  transition: background-color 100ms ease-out;
 }
 
 .post:hover, .conversation-block:hover, .recipient:hover {
   background-color: rgb(247, 249, 249);
+  transition: background-color 100ms ease-out;
 }
 
 .post {
@@ -185,7 +187,6 @@ input {
   display: flex;
   height: 100%;
   align-items: stretch;
-  margin-top: 53px;
 }
 
 .title {
@@ -195,12 +196,16 @@ input {
 
 .conversation-block {
   cursor: pointer;
-  padding: 16px;
+  padding-left: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 95px;
 }
 
 .conversation-list {
   border-right: 1px #e6ecf0 solid;
-  max-width: 388.4px;
+  width: 430px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -310,6 +315,7 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 600px;
 }
 
 .recipient-username {
@@ -327,7 +333,7 @@ input {
 .enabled:hover {
   background-color: rgba(29, 155, 240, 0.1);
   border-radius: 30px;
-  transition: color 100ms ease-out;
+  transition: background-color 100ms ease-out;
 }
 
 .disabled {
@@ -350,7 +356,7 @@ input {
 
 .enabled-squawk:hover {
   background-color: rgb(26, 140, 216);
-  transition: color 100ms ease-out;
+  transition: background-color 100ms ease-out;
 }
 
 .squawk-input {
@@ -423,18 +429,22 @@ input[type=file] {
 
 .parroted-icon, .not-parroted-icon:hover {
   fill: rgb(4, 187, 126);
+  transition: fill 100ms ease-out;
 }
 
 .not-parroted-icon:hover, .parroted-icon:hover {
   background-color: rgba(0, 186, 124, 0.1);
+  transition: background-color 100ms ease-out;
 }
 
 .liked-icon, .not-liked-icon:hover {
   fill: rgb(249, 24, 128);
+  transition: fill 100ms ease-out;
 }
 
 .not-liked-icon:hover, .liked-icon:hover {
   background-color: rgba(249, 24, 128, 0.1);
+  transition: background-color 100ms ease-out;
 }
 
 .squawk-page, .app-container {
@@ -459,6 +469,7 @@ input[type=file] {
 
 .search-option:hover {
   background-color: rgba(15, 20, 25, 0.1);
+  transition: background-color 100ms ease-out;
 }
 
 .user-result {
@@ -470,8 +481,34 @@ input[type=file] {
 
 .user-result:hover {
   background-color: rgba(0, 0, 0, 0.03);
+  transition: background-color 100ms ease-out;
 }
 
 .user-info {
   margin-left: 10px;
+}
+
+.active-block {
+  background-color: rgb(239, 243, 244);
+}
+
+.active-block-strip {
+  background-color: #1D9BF0;
+  height: 100%;
+  width: 2px;
+}
+
+.inactive-block-strip {
+  background-color: inherit;
+  height: 100%;
+  width: 2px;
+}
+
+.conversation-block-text {
+  margin-left: 10px;
+}
+
+.conversation-block-info {
+  display: flex;
+  align-items: center;
 }

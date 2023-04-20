@@ -223,7 +223,7 @@ const Sidenav = ({
               <h4>
                 Don't have an account?{" "}
                 <span
-                  class="pop-switch"
+                  className="pop-switch"
                   onClick={() => {
                     setRegistering(true);
                   }}
