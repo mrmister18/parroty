@@ -24,6 +24,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [conversation, setConversation] = useState([]);
   const [recipient, setRecipient] = useState({});
+  const [activeNav, setActiveNav] = useState("")
 
   useEffect(() => {
     window.localStorage.setItem("token", token);
@@ -58,6 +59,7 @@ const App = () => {
   return (
     <>
       <Sidenav
+      activeNav={activeNav}
         token={token}
         setToken={setToken}
         user={user}
@@ -72,6 +74,7 @@ const App = () => {
             path="/messages"
             element={
               <Messages
+              setActiveNav={setActiveNav}
                 token={token}
                 messages={messages}
                 setMessages={setMessages}
@@ -85,12 +88,13 @@ const App = () => {
           ></Route>
           <Route
             path="/"
-            element={<ParrotyFeed squawks={squawks} setSquawks={setSquawks} />}
+            element={<ParrotyFeed setActiveNav={setActiveNav} squawks={squawks} setSquawks={setSquawks} />}
           ></Route>
           <Route
             path="/:username"
             element={
               <Profile
+              setActiveNav={setActiveNav}
                 squawks={squawks}
                 setSquawks={setSquawks}
                 user={user}
@@ -105,6 +109,7 @@ const App = () => {
             path="/home"
             element={
               <Home
+              setActiveNav={setActiveNav}
                 setSquawks={setSquawks}
                 squawks={squawks}
                 user={user}

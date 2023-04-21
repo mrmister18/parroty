@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createSquawk, getSquawks, getUser } from "../axios-services";
 import { useNavigate } from "react-router-dom";
 
-const Home = ({ setSquawks, squawks, user, setUser, token }) => {
+const Home = ({ setSquawks, squawks, user, setUser, token, setActiveNav }) => {
   const navigate = useNavigate();
   const [squawkContent, setSquawkContent] = useState("");
   const [squawkPicture, setSquawkPicture] = useState("");
@@ -30,6 +30,7 @@ const Home = ({ setSquawks, squawks, user, setUser, token }) => {
     };
     getFeedSquawks();
   }, []);
+  setActiveNav("Home")
   return (
     <div className="app-container">
       <h1 className="title">Home</h1>
