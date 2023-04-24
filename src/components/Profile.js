@@ -9,7 +9,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 const timeAgo = require("node-time-ago");
 
-const Profile = ({ squawks, setSquawks, user, token, setUser, setRecipient, setConversation }) => {
+const Profile = ({ squawks, setSquawks, user, token, setUser, setRecipient, setConversation, setActiveNav }) => {
   const { username } = useParams();
   const [profile, setProfile] = useState({});
   const [name, setName] = useState("");
@@ -69,6 +69,7 @@ navigate("/messages")
     };
     getProfileSquawks();
   }, []);
+  if (user.username === username) {setActiveNav("Profile")}
   return (
     <>
       {profile.id ? <><div>

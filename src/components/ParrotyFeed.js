@@ -3,7 +3,7 @@ import { getSquawks } from "../axios-services";
 import { useNavigate } from "react-router-dom";
 const timeAgo = require("node-time-ago");
 
-const ParrotyFeed = ({ squawks, setSquawks }) => {
+const ParrotyFeed = ({ squawks, setSquawks, setActiveNav }) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
 
@@ -15,7 +15,7 @@ const ParrotyFeed = ({ squawks, setSquawks }) => {
     };
     getParrotySquawks();
   }, []);
-
+setActiveNav("Explore")
   return (
     <div className="app-container">
       <h1 className="title">Explore</h1>

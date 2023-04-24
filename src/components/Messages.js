@@ -12,6 +12,7 @@ const Messages = ({
   recipient,
   setRecipient,
   user,
+  setActiveNav
 }) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Messages = ({
     };
     setUserMessages();
   }, []);
+  setActiveNav("Messages")
   return (
     <>
       <div className="convos">

@@ -120,9 +120,7 @@ const Search = ({ squawks, setSquawks, users, setUsers }) => {
                         {squawk.author.name}
                         <span className="post__headerSpecial">
                           <span className="material-icons post__badge"> </span>@
-                          {squawk.author.username}
-                        </span>
-                        <span> {timeAgo(squawk.createdAt, "twitter")}</span>
+                          {squawk.author.username} · {timeAgo(squawk.createdAt, "twitter")}</span>
                       </h3>
                     </div>
                     <div className="post__headerDescription">

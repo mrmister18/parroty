@@ -530,5 +530,5 @@ input[type=file] {
 }
 
 .active-nav-option {
-  background-color: pink;
+  font-weight: 700;
 }
