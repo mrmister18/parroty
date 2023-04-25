@@ -24,7 +24,9 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [conversation, setConversation] = useState([]);
   const [recipient, setRecipient] = useState({});
-  const [activeNav, setActiveNav] = useState("")
+  const [activeNav, setActiveNav] = useState("");
+  const [squawkContent, setSquawkContent] = useState("");
+  const [squawkPicture, setSquawkPicture] = useState("");
 
   useEffect(() => {
     window.localStorage.setItem("token", token);
@@ -59,7 +61,7 @@ const App = () => {
   return (
     <>
       <Sidenav
-      activeNav={activeNav}
+        activeNav={activeNav}
         token={token}
         setToken={setToken}
         user={user}
@@ -67,6 +69,12 @@ const App = () => {
         setMessages={setMessages}
         setRecipient={setRecipient}
         setConversation={setConversation}
+        setSquawkContent={setSquawkContent}
+        squawkContent={squawkContent}
+        setSquawkPicture={setSquawkPicture}
+        squawkPicture={squawkPicture}
+        setSquawks={setSquawks}
+        squawks={squawks}
       />
       <div className="main">
         <Routes>
@@ -74,7 +82,7 @@ const App = () => {
             path="/messages"
             element={
               <Messages
-              setActiveNav={setActiveNav}
+                setActiveNav={setActiveNav}
                 token={token}
                 messages={messages}
                 setMessages={setMessages}
@@ -88,13 +96,23 @@ const App = () => {
           ></Route>
           <Route
             path="/"
-            element={<ParrotyFeed setActiveNav={setActiveNav} squawks={squawks} setSquawks={setSquawks} />}
+            element={
+              <ParrotyFeed
+                setActiveNav={setActiveNav}
+                squawks={squawks}
+                setSquawks={setSquawks}
+                setSquawkContent={setSquawkContent}
+                squawkContent={squawkContent}
+                setSquawkPicture={setSquawkPicture}
+                squawkPicture={squawkPicture}
+              />
+            }
           ></Route>
           <Route
             path="/:username"
             element={
               <Profile
-              setActiveNav={setActiveNav}
+                setActiveNav={setActiveNav}
                 squawks={squawks}
                 setSquawks={setSquawks}
                 user={user}
@@ -109,7 +127,7 @@ const App = () => {
             path="/home"
             element={
               <Home
-              setActiveNav={setActiveNav}
+                setActiveNav={setActiveNav}
                 setSquawks={setSquawks}
                 squawks={squawks}
                 user={user}
@@ -124,7 +142,14 @@ const App = () => {
           ></Route>
           <Route
             path="/search/:searchTerm"
-            element={<Search users={users} setUsers={setUsers} squawks={squawks} setSquawks={setSquawks} />}
+            element={
+              <Search
+                users={users}
+                setUsers={setUsers}
+                squawks={squawks}
+                setSquawks={setSquawks}
+              />
+            }
           ></Route>
         </Routes>
       </div>

@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { createSquawk, getSquawks, getUser } from "../axios-services";
 import { useNavigate } from "react-router-dom";
 
-const Home = ({ setSquawks, squawks, user, setUser, token, setActiveNav }) => {
+const Home = ({ setSquawks, squawks, user, setUser, token, setActiveNav, squawkContent, setSquawkContent, squawkPic, setSquawkPicture }) => {
   const navigate = useNavigate();
-  const [squawkContent, setSquawkContent] = useState("");
-  const [squawkPicture, setSquawkPicture] = useState("");
   const timeAgo = require("node-time-ago");
 
   useEffect(() => {

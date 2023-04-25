@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerNewUser, userLogin, getUser } from "../axios-services";
+import { registerNewUser, userLogin, getUser, createSquawk } from "../axios-services";
 
 const Sidenav = ({
   token,
@@ -10,7 +10,13 @@ const Sidenav = ({
   setMessages,
   setRecipient,
   setConversation,
-  activeNav
+  activeNav,
+  squawkContent,
+  setSquawkContent,
+  squawkPicture,
+  setSquawkPicture,
+  setSquawks,
+  squawks
 }) => {
   const [registering, setRegistering] = useState(false);
   const [username, setUsername] = useState("");
@@ -86,6 +92,7 @@ const Sidenav = ({
           </div>
         )}
         {token ? (
+          <>
           <div
             onClick={() => {
               setToken("");
@@ -96,7 +103,7 @@ const Sidenav = ({
               navigate("/");
             }}
             className="sidebar-option"
-          >
+            >
             <svg className="sidebar-pic" viewBox="0 0 24 24">
               <g>
                 <path d="M15 24H1c-.6 0-1-.4-1-1V1c0-.6.4-1 1-1h14c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1s-1-.4-1-1V2H2v20h12v-6c0-.6.4-1 1-1s1 .4 1 1v7c0 .6-.4 1-1 1z"></path>
@@ -107,6 +114,11 @@ const Sidenav = ({
             </svg>
             <div>Logout</div>
           </div>
+            <button onClick={() => {
+              document.getElementById("popup-squawk-form").style.display = "flex";
+              document.getElementById("background").style.display = "flex";
+            }}>Squawk</button>
+          </>
         ) : (
           <>
             <div
@@ -138,7 +150,66 @@ const Sidenav = ({
           </>
         )}
       </div>
-      <div id="background"></div>
+      <div id="background" onClick={() => {
+        document.getElementById("background").style.display = "none";
+        document.getElementById("myForm").style.display = "none";
+        document.getElementById("popup-squawk-form").style.display = "none";
+      }}></div>
+      <div className="popup" id="popup-squawk-form">
+      <form
+      className="squawk-form"
+        onSubmit={async (event) => {
+          event.preventDefault();
+          if (!squawkContent) {return}
+          const { squawk } = await createSquawk(squawkContent, squawkPicture, token);
+          setSquawks([squawk, ...squawks]);
+          setSquawkContent("");
+          setSquawkPicture("")
+        }}
+      >
+        <div className="squawk-form-top">
+        <div className="post__avatar">
+                <img src={user?.profilePicture} alt="" />
+              </div>
+        <input
+          value={squawkContent}
+          className="squawk-input"
+          placeholder="What's happening?"
+          onChange={(event) => setSquawkContent(event.target.value)}
+        ></input>
+        </div>
+        <div className="squawk-controls">
+          <label className="squawk-file">
+        <input
+            name="squawkPicture"
+            type="file"
+            accept="image/*"
+            id="squawkPic"
+            onChange={(event) => {
+              const [file] = squawkPic.files
+              setSquawkPicture(URL.createObjectURL(file))
+            }}
+          ></input>
+          <svg className="squawk-pic-icon" viewBox="0 0 20 20">
+              <g>
+              <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z"></path>
+              </g>
+            </svg>
+          </label>
+        <span className={squawkContent ? "squawk-button enabled-squawk" : "squawk-button disabled"}
+        onClick={async (event) => {
+          event.preventDefault();
+          if (!squawkContent) {return}
+          const { squawk } = await createSquawk(squawkContent, squawkPicture, token);
+          setSquawks([squawk, ...squawks]);
+          setSquawkContent("");
+          setSquawkPicture("")
+        }}>
+          Squawk
+        </span>
+        </div>
+      </form>
+      </div>
       <div className="popup" id="myForm">
         <form className="nav-form">
           <div className="popup-head">
