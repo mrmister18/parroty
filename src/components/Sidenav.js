@@ -43,6 +43,7 @@ const Sidenav = ({
 
   async function registeringUser() {
     const data = await registerNewUser({ username, password, name });
+    console.log(data)
     setToken(data.token);
     const userProfile = await getUser(data.token);
       setUser(userProfile);
@@ -50,6 +51,7 @@ const Sidenav = ({
   return (
     <>
       <div className="sidenav">
+        <div>
         {token && (
           <div onClick={() => navigate("/home")} className={`sidebar-option ${activeNav === "Home" ? "active-nav-option" : " "}`}>
             <svg className="sidebar-pic" viewBox="0 0 24 24">
@@ -119,21 +121,6 @@ const Sidenav = ({
               document.getElementById("background").style.display = "flex";
             }}
             className="squawk-button side-squawk-button">Squawk</div>
-            <div
-              className="user-result"
-              onClick={() => {
-                navigate(`/${user.username}`);
-              }}
-            >
-              <div className="post__avatar">
-                <img src={user?.profilePicture} alt="" />
-              </div>
-              <div className="user-info">
-                <strong>{user.name}</strong>{" "}
-                <div className="username-result">@{user.username}</div>
-                <div>{user.bio}</div>
-              </div>
-            </div>
           </>
         ) : (
           <>
@@ -202,6 +189,7 @@ const Sidenav = ({
           className="squawk-input"
           placeholder="What's happening?"
           onChange={(event) => setSquawkContent(event.target.value)}
+          required
         ></input>
         </div>
         <div className="squawk-controls">
@@ -334,6 +322,23 @@ const Sidenav = ({
             </>
           )}
         </form>
+        </div>
+        {token ? <div>
+            <div
+              className="user-result sidenav-profile"
+              onClick={() => {
+                navigate(`/${user.username}`);
+              }}
+            >
+              <div className="post__avatar">
+                <img src={user?.profilePicture} alt="" />
+              </div>
+              <div className="user-info">
+                <strong>{user.name}</strong>{" "}
+                <div className="username-result">@{user.username}</div>
+              </div>
+            </div>
+            </div> : null}
       </div>
     </>
   );

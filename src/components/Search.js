@@ -170,7 +170,7 @@ const Search = ({ squawks, setSquawks, users, setUsers }) => {
       ) : users?.length ? (
         users.map((user) => {
           return (
-            <div
+            <div id={user.id}
               className="user-result"
               onClick={() => {
                 navigate(`/${user.username}`);

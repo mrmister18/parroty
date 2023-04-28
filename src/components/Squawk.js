@@ -73,10 +73,13 @@ const Squawk = ({ token, user }) => {
             ) : (
               <span
                 onClick={async () => {
+                  if (!token) {document.getElementById("myForm").style.display = "flex";
+                  document.getElementById("background").style.display = "flex";}
+                  else {
                   const { parrot } = await createParrot(squawk.id, token);
                   let squawkCopy = { ...squawk };
                   squawkCopy.parrots.push(parrot);
-                  setSquawk(squawkCopy);
+                  setSquawk(squawkCopy);}
                 }}
               >
                 <svg className="not-parroted-icon" viewBox="0 0 25 25">
@@ -104,10 +107,13 @@ const Squawk = ({ token, user }) => {
             ) : (
               <span
                 onClick={async () => {
+                  if (!token) {document.getElementById("myForm").style.display = "flex";
+                  document.getElementById("background").style.display = "flex";}
+                  else {
                   const { like } = await createLike(squawk.id, token);
                   let squawkCopy = { ...squawk };
                   squawkCopy.likes.push(like);
-                  setSquawk(squawkCopy);
+                  setSquawk(squawkCopy);}
                 }}
               >
                 <svg className="not-liked-icon" viewBox="0 0 25 25">
