@@ -114,10 +114,26 @@ const Sidenav = ({
             </svg>
             <div>Logout</div>
           </div>
-            <button onClick={() => {
+            <div onClick={() => {
               document.getElementById("popup-squawk-form").style.display = "flex";
               document.getElementById("background").style.display = "flex";
-            }}>Squawk</button>
+            }}
+            className="squawk-button side-squawk-button">Squawk</div>
+            <div
+              className="user-result"
+              onClick={() => {
+                navigate(`/${user.username}`);
+              }}
+            >
+              <div className="post__avatar">
+                <img src={user?.profilePicture} alt="" />
+              </div>
+              <div className="user-info">
+                <strong>{user.name}</strong>{" "}
+                <div className="username-result">@{user.username}</div>
+                <div>{user.bio}</div>
+              </div>
+            </div>
           </>
         ) : (
           <>
@@ -155,9 +171,9 @@ const Sidenav = ({
         document.getElementById("myForm").style.display = "none";
         document.getElementById("popup-squawk-form").style.display = "none";
       }}></div>
-      <div className="popup" id="popup-squawk-form">
+      <div className="popup popup-squawk" id="popup-squawk-form">
       <form
-      className="squawk-form"
+      className="squawk-form squawk-form-popup"
         onSubmit={async (event) => {
           event.preventDefault();
           if (!squawkContent) {return}
@@ -165,8 +181,18 @@ const Sidenav = ({
           setSquawks([squawk, ...squawks]);
           setSquawkContent("");
           setSquawkPicture("")
+          document.getElementById("popup-squawk-form").style.display = "none";
+              document.getElementById("background").style.display = "none";
         }}
       >
+        <div className="popup-head">
+      <div className="close" onClick={() => {
+              document.getElementById("popup-squawk-form").style.display = "none";
+              document.getElementById("background").style.display = "none";
+            }}>
+              &times;
+            </div>
+            </div>
         <div className="squawk-form-top">
         <div className="post__avatar">
                 <img src={user?.profilePicture} alt="" />
@@ -204,6 +230,8 @@ const Sidenav = ({
           setSquawks([squawk, ...squawks]);
           setSquawkContent("");
           setSquawkPicture("")
+          document.getElementById("popup-squawk-form").style.display = "none";
+              document.getElementById("background").style.display = "none";
         }}>
           Squawk
         </span>

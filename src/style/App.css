@@ -75,10 +75,6 @@ body {
   transition: background-color 100ms ease-out;
 }
 
-.popup-head {
-  align-items: left;
-}
-
 .pop-switch {
   color: #1D9BF0;
   cursor: pointer;
@@ -137,6 +133,7 @@ input {
   padding: 20px;
   font-size: 24px;
   margin-right: 20px;
+  margin-bottom: 10px;
   height: 15px;
   color: rgb(15, 20, 25);
 }
@@ -354,7 +351,7 @@ input {
   padding: 8px 16px;
 }
 
-.enabled-squawk:hover {
+.enabled-squawk:hover, .side-squawk-button:hover {
   background-color: rgb(26, 140, 216);
   transition: background-color 100ms ease-out;
 }
@@ -531,4 +528,20 @@ input[type=file] {
 
 .active-nav-option {
   font-weight: 700;
+}
+
+.popup-squawk {
+  aspect-ratio: 2;
+}
+
+.squawk-form-popup {
+  border: 0;
+}
+
+.side-squawk-button {
+  padding: 16px 0px;
+  display: flex;
+  justify-content: center;
+  margin-right: 20px;
+  cursor: pointer;
 }
