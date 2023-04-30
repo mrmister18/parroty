@@ -74,8 +74,8 @@ navigate("/messages")
     <>
       {profile.id ? <><div>
         <img src={`${profile.profilePicture}`}></img>
-        <div>{profile.name}</div>
-        <div>@{profile.username}</div>
+        <div><strong>{profile.name}</strong></div>
+        <div className="username-result">@{profile.username}</div>
         <div>{profile.bio}</div>
         <div>
           {profile.following?.length} Following {profile.followers?.length}{" "}
