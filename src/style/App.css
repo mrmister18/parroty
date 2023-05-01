@@ -387,7 +387,7 @@ input[type=file] {
   height: 35px;
 }
 
-.squawk-controls, .search-options {
+.squawk-controls, .search-options, .profile-head {
   padding: 5px;
   display: flex;
   justify-content: space-between;
@@ -562,4 +562,24 @@ input[type=file] {
   background-color: #e6ecf0;
   border-radius: 9999px;
   transition: background-color 100ms ease-out;
+}
+
+.profile-head {
+  width: 566px;
+  align-items: center;
+}
+
+.profile-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px;
+  background-color: black;
+  color: #e6ecf0;
+  font-weight: 700;
+  padding: 0px 16px;
+  cursor: pointer;
+  margin: 5px;
+  width: 70px;
+  height: 34px;
 }

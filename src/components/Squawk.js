@@ -21,9 +21,7 @@ const Squawk = ({ token, user }) => {
   return (<div className="squawk-page">
   <h1 className="title">Squawk</h1>
     {squawk?.id && squawk.author.username === username ? <div key={`${squawk.id}`}>
-      <div className="post__avatar">
-        <img src={squawk.author?.profilePicture} alt="" />
-      </div>
+        <img className="post__avatar" src={squawk.author?.profilePicture} alt="" />
 
       <div className="post__body">
         <div className="post__header">
@@ -142,9 +140,7 @@ const Squawk = ({ token, user }) => {
           }}
         >
           <div className="squawk-form-top">
-        <div className="post__avatar">
-                <img src={user?.profilePicture} alt="" />
-              </div>
+                <img className="post__avatar" src={user?.profilePicture} alt="" />
         <input
           value={commentContent}
           className="squawk-input"
@@ -181,9 +177,7 @@ const Squawk = ({ token, user }) => {
                 navigate(`/${comment.username}`);
               }}
             >
-              <div className="post__avatar">
-                <img src={comment.profilePicture} alt="" />
-              </div>
+                <img className="post__avatar" src={comment.profilePicture} alt="" />
 
               <div className="post__body">
                 <div className="post__header">

@@ -73,21 +73,15 @@ navigate("/messages")
   return (
     <>
       {profile.id ? <><div>
-        <img className="profile-page-picture" src={`${profile.profilePicture}`}></img>
-        <div className="title"><strong>{profile.name}</strong></div>
-        <div className="recipient-username">@{profile.username}</div>
-        <div>{profile.bio}</div>
-        <div>
-          <strong>{profile.following?.length}</strong> <span className="username-result">Following</span> <strong>{profile.followers?.length}</strong>{" "}
-          <span className="username-result">Followers</span>
-        </div>
+        <div className="profile-head"><img className="profile-page-picture" src={`${profile.profilePicture}`}></img>
         {user.username === username ? (
-          <button onClick={openForm}>Edit Profile</button>
+          <div className="profile-button" onClick={openForm}>Edit Profile</div>
         ) : (
-          <>
+          <div>
             <button onClick={messageUser}>Message</button>{" "}
             {user.id && user?.following.find((person) => person.userId === profile.id) ? (
-              <button
+              <div
+              className="profile-button"
                 onClick={async () => {
                   await unfollow(profile.id, token);
                   let userCopy = { ...user };
@@ -95,10 +89,11 @@ navigate("/messages")
                   setUser(userCopy);
                 }}
               >
-                Unfollow
-              </button>
+                Following
+              </div>
             ) : (
-              <button
+              <div
+              className="profile-button"
                 onClick={async () => {
                   const { follower } = await follow(profile.id, token);
                   let userCopy = { ...user };
@@ -107,10 +102,17 @@ navigate("/messages")
                 }}
               >
                 Follow
-              </button>
+              </div>
             )}
-          </>
-        )}
+          </div>
+        )}</div>
+        <div className="title"><strong>{profile.name}</strong></div>
+        <div className="recipient-username">@{profile.username}</div>
+        <div>{profile.bio}</div>
+        <div>
+          <strong>{profile.following?.length}</strong> <span className="username-result">Following</span> <strong>{profile.followers?.length}</strong>{" "}
+          <span className="username-result">Followers</span>
+        </div>
       </div>
       <div className="app-container">
         {squawks.map((squawk) => {
