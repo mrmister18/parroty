@@ -40,9 +40,7 @@ setActiveNav("Explore")
                 navigate(`/${squawk.author.username}/${squawk.id}`);
               }}
             >
-              <div className="post__avatar">
-                <img src={squawk.author.profilePicture} alt="" />
-              </div>
+                <img className="post__avatar" src={squawk.author.profilePicture} alt="" />
 
               <div className="post__body">
                 <div className="post__header">

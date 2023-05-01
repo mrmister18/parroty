@@ -159,11 +159,20 @@ input {
   align-items: flex-start;
 }
 
-.post__avatar img {
+.post__avatar {
   border-radius: 50%;
   height: 48px;
   width: 48px;
   background-size: contain;
+  object-fit: cover;
+}
+
+.profile-page-picture {
+    border-radius: 50%;
+    height: 250px;
+    width: 250px;
+    background-size: contain;
+    object-fit: cover;
 }
 
 .author-name, .recipient-name {
@@ -184,7 +193,7 @@ input {
 
 .title {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 800;
 }
 
 .conversation-block {

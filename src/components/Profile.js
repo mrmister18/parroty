@@ -73,13 +73,13 @@ navigate("/messages")
   return (
     <>
       {profile.id ? <><div>
-        <img src={`${profile.profilePicture}`}></img>
-        <div><strong>{profile.name}</strong></div>
-        <div className="username-result">@{profile.username}</div>
+        <img className="profile-page-picture" src={`${profile.profilePicture}`}></img>
+        <div className="title"><strong>{profile.name}</strong></div>
+        <div className="recipient-username">@{profile.username}</div>
         <div>{profile.bio}</div>
         <div>
-          {profile.following?.length} Following {profile.followers?.length}{" "}
-          Followers
+          <strong>{profile.following?.length}</strong> <span className="username-result">Following</span> <strong>{profile.followers?.length}</strong>{" "}
+          <span className="username-result">Followers</span>
         </div>
         {user.username === username ? (
           <button onClick={openForm}>Edit Profile</button>
@@ -123,9 +123,7 @@ navigate("/messages")
                   navigate(`/${squawk.author.username}/${squawk.id}`);
                 }}
               >
-                <div className="post__avatar">
-                  <img src={squawk.author.profilePicture} alt="" />
-                </div>
+                  <img className="post__avatar" src={squawk.author.profilePicture} alt="" />
 
                 <div className="post__body">
                   <div className="post__header">

@@ -43,9 +43,7 @@ const Messages = ({
                     }}
                   >
                     <div className="conversation-block-info">
-                    <div className="post__avatar" onClick={() => navigate(`/${message.username}`)}>
-                <img src={message.profilePicture} alt="" />
-              </div>
+                <img className="post__avatar" onClick={() => navigate(`/${message.username}`)} src={message.profilePicture} alt="" />
                     <div className="conversation-block-text">
                     <h3 className="author-name">
                       {message.name}
@@ -89,7 +87,7 @@ const Messages = ({
                   <img
                     src={recipient.profilePicture}
                     alt=""
-                    className="recipient-pic"
+                    className="recipient-pic post__avatar"
                   ></img>
                   <div className="recipient-name">{recipient.name}</div>
                   <div className="recipient-username">

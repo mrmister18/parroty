@@ -109,9 +109,7 @@ const Search = ({ squawks, setSquawks, users, setUsers }) => {
                   navigate(`/${squawk.author.username}/${squawk.id}`);
                 }}
               >
-                <div className="post__avatar">
-                  <img src={squawk.author.profilePicture} alt="" />
-                </div>
+                  <img className="post__avatar" src={squawk.author.profilePicture} alt="" />
 
                 <div className="post__body">
                   <div className="post__header">
@@ -176,9 +174,7 @@ const Search = ({ squawks, setSquawks, users, setUsers }) => {
                 navigate(`/${user.username}`);
               }}
             >
-              <div className="post__avatar">
-                <img src={user?.profilePicture} alt="" />
-              </div>
+                <img className="post__avatar" src={user?.profilePicture} alt="" />
               <div className="user-info">
                 <strong>{user.name}</strong>{" "}
                 <div className="username-result">@{user.username}</div>

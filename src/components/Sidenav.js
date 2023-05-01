@@ -181,9 +181,7 @@ const Sidenav = ({
             </div>
             </div>
         <div className="squawk-form-top">
-        <div className="post__avatar">
-                <img src={user?.profilePicture} alt="" />
-              </div>
+                <img className="post__avatar" src={user?.profilePicture} alt="" />
         <input
           value={squawkContent}
           className="squawk-input"
