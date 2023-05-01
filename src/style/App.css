@@ -55,6 +55,7 @@ body {
   text-align: center;
   flex-direction: column;
   width: 600px;
+  padding: 5px;
 }
 
 .main {
@@ -585,6 +586,11 @@ input[type=file] {
   font-size: 15px;
 }
 
+.profile-button:hover {
+  background-color: rgb(39, 44, 48);
+  transition: background-color 100ms ease-out;
+}
+
 .profile-message-button {
   height: 34px;
   width: 34px;
@@ -593,4 +599,13 @@ input[type=file] {
   display: flex;
   justify-content: center;
   cursor: pointer;
+}
+
+.profile-input {
+  width: 95%;
+}
+
+.login-input {
+  width: 242px;
+  margin: 5px 0px;
 }
