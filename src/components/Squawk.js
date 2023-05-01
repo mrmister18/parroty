@@ -26,7 +26,7 @@ const Squawk = ({ token, user }) => {
       <div className="post__body">
         <div className="post__header">
           <div className="post__headerText">
-            <h3
+            <h3 style={{cursor: 'pointer'}}
               onClick={() => {
                 navigate(`/${squawk.author.username}`);
               }}

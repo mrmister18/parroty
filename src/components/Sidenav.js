@@ -328,9 +328,7 @@ const Sidenav = ({
                 navigate(`/${user.username}`);
               }}
             >
-              <div className="post__avatar">
-                <img src={user?.profilePicture} alt="" />
-              </div>
+                <img className="post__avatar" src={user?.profilePicture} alt="" />
               <div className="user-info">
                 <strong>{user.name}</strong>{" "}
                 <div className="username-result">@{user.username}</div>

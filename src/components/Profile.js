@@ -19,10 +19,12 @@ const Profile = ({ squawks, setSquawks, user, token, setUser, setRecipient, setC
 
   function closeForm() {
     document.getElementById("profileForm").style.display = "none";
+    document.getElementById("background").style.display = "none";
   }
 
   function openForm() {
     document.getElementById("profileForm").style.display = "block";
+    document.getElementById("background").style.display = "block";
   }
 
   async function updateUserProfile() {
@@ -77,10 +79,12 @@ navigate("/messages")
         {user.username === username ? (
           <div className="profile-button" onClick={openForm}>Edit Profile</div>
         ) : (
-          <div>
-            <button onClick={messageUser}>Message</button>{" "}
+          <div style={{display: "flex", flexDirection:"row"}}>
+            <span className="profile-message-button" onClick={messageUser}>
+            <svg viewBox="-5 -5 35 35" aria-hidden="true"><g><path d="M1.998 5.5c0-1.381 1.119-2.5 2.5-2.5h15c1.381 0 2.5 1.119 2.5 2.5v13c0 1.381-1.119 2.5-2.5 2.5h-15c-1.381 0-2.5-1.119-2.5-2.5v-13zm2.5-.5c-.276 0-.5.224-.5.5v2.764l8 3.638 8-3.636V5.5c0-.276-.224-.5-.5-.5h-15zm15.5 5.463l-8 3.636-8-3.638V18.5c0 .276.224.5.5.5h15c.276 0 .5-.224.5-.5v-8.037z"></path></g></svg>
+              </span>{" "}
             {user.id && user?.following.find((person) => person.userId === profile.id) ? (
-              <div
+              <span
               className="profile-button"
                 onClick={async () => {
                   await unfollow(profile.id, token);
@@ -90,9 +94,9 @@ navigate("/messages")
                 }}
               >
                 Following
-              </div>
+              </span>
             ) : (
-              <div
+              <span
               className="profile-button"
                 onClick={async () => {
                   const { follower } = await follow(profile.id, token);
@@ -102,7 +106,7 @@ navigate("/messages")
                 }}
               >
                 Follow
-              </div>
+              </span>
             )}
           </div>
         )}</div>
@@ -184,7 +188,11 @@ navigate("/messages")
             await updateUserProfile();
           }}
         >
+          <div className="close" onClick={closeForm}>
+              &times;
+            </div>
           <h1>Edit Profile</h1>
+          <button className="profile-button" type="submit">Save</button>
           <label htmlFor="name">Name</label>
           <input
             name="name"
@@ -204,21 +212,23 @@ navigate("/messages")
               setBio(event.target.value);
             }}
           ></input>
-          <label htmlFor="profilePicture">Profile Picture</label>
-          <input
-            name="profilePicture"
+          <label className="squawk-file">
+        <input
+            name="squawkPicture"
             type="file"
             accept="image/*"
-            id="profileInput"
+            id="profilePic"
             onChange={(event) => {
-              const [file] = profileInput.files
+              const [file] = profilePic.files
               setProfilePicture(URL.createObjectURL(file))
             }}
           ></input>
-          <button type="submit">Save Changes</button>
-          <button type="button" onClick={closeForm}>
-            Close
-          </button>
+          <svg className="squawk-pic-icon" viewBox="0 0 20 20">
+              <g>
+              <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z"></path>
+              </g>
+            </svg>
+          </label>
         </form>
       </div></> : <h1>This account does not exist</h1>}
     </>
