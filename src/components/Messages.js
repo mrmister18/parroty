@@ -25,6 +25,7 @@ const Messages = ({
     setUserMessages();
   }, []);
   setActiveNav("Messages")
+  if (!token) {navigate("/")}
   return (
     <>
       <div className="convos">

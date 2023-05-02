@@ -425,7 +425,6 @@ input[type=file] {
 }
 
 .parroted-icon, .not-liked-icon, .liked-icon, .not-parroted-icon {
-  width: 23px;
   padding: 10px;
   border-radius: 50%;
 }
@@ -608,4 +607,13 @@ input[type=file] {
 .login-input {
   width: 242px;
   margin: 5px 0px;
+}
+
+.squawk-likes, .squawk-parrots, .squawk-comments {
+  display: flex;
+  align-items: center;
+}
+
+.squawk-likes:hover {
+  color: rgb(249, 24, 128);
 }
