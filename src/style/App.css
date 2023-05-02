@@ -424,7 +424,7 @@ input[type=file] {
   font-size: 14px;
 }
 
-.parroted-icon, .not-liked-icon, .liked-icon, .not-parroted-icon {
+.parroted-icon, .not-liked-icon, .liked-icon, .not-parroted-icon, .post-footer-icon {
   padding: 10px;
   border-radius: 50%;
 }
@@ -616,4 +616,18 @@ input[type=file] {
 
 .squawk-likes:hover {
   color: rgb(249, 24, 128);
+}
+
+.squawk-parrots:hover {
+  color: rgb(4, 187, 126);
+}
+
+.squawk-comments:hover {
+  color: #1D9BF0;
+}
+
+.squawk-comment-icon:hover {
+  fill: #1D9BF0;
+  background-color: rgba(105, 177, 222, 0.1);
+  transition: background-color 100ms ease-out;
 }

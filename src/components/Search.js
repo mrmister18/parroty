@@ -5,9 +5,9 @@ const timeAgo = require("node-time-ago");
 
 const Search = ({ squawks, setSquawks, users, setUsers }) => {
   const navigate = useNavigate();
-  const [searchText, setSearchText] = useState("");
   const [squawkSearch, setSquawkSearch] = useState(true);
   const { searchTerm } = useParams();
+  const [searchText, setSearchText] = useState(searchTerm);
 
   useEffect(() => {
     const getParrotySquawks = async () => {
@@ -40,7 +40,6 @@ const Search = ({ squawks, setSquawks, users, setUsers }) => {
     };
     getParrotyUsers();
   }, []);
-
   return (
     <div className="app-container">
       <h1>Search</h1>
