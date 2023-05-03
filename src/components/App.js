@@ -101,10 +101,8 @@ const App = () => {
                 setActiveNav={setActiveNav}
                 squawks={squawks}
                 setSquawks={setSquawks}
-                setSquawkContent={setSquawkContent}
-                squawkContent={squawkContent}
-                setSquawkPicture={setSquawkPicture}
-                squawkPicture={squawkPicture}
+                token={token}
+                user={user}
               />
             }
           ></Route>
@@ -133,6 +131,10 @@ const App = () => {
                 user={user}
                 setUser={setUser}
                 token={token}
+                setSquawkContent={setSquawkContent}
+                squawkContent={squawkContent}
+                squawkPicture={squawkPicture}
+                setSquawkPicture={setSquawkPicture}
               />
             }
           ></Route>
@@ -148,6 +150,8 @@ const App = () => {
                 setUsers={setUsers}
                 squawks={squawks}
                 setSquawks={setSquawks}
+                user={user}
+                token={token}
               />
             }
           ></Route>

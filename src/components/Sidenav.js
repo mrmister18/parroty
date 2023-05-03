@@ -26,6 +26,7 @@ const Sidenav = ({
   const [registering, setRegistering] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("")
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
@@ -255,6 +256,7 @@ const Sidenav = ({
             <div className="squawk-controls">
               <label className="squawk-file">
                 <input
+                maxLength={281}
                   name="squawkPicture"
                   type="file"
                   accept="image/*"
@@ -270,6 +272,7 @@ const Sidenav = ({
                   </g>
                 </svg>
               </label>
+              <span>{squawkContent.length ? <>{squawkContent.length}/281{" "}</> : null}
               <span
                 className={
                   squawkContent
@@ -295,6 +298,7 @@ const Sidenav = ({
                 }}
               >
                 Squawk
+              </span>
               </span>
             </div>
           </form>
@@ -326,6 +330,7 @@ const Sidenav = ({
               required
             ></input>
             <input
+            minLength={8}
               className="login-input"
               name="password"
               type="password"
@@ -338,6 +343,18 @@ const Sidenav = ({
             ></input>
             {registering ? (
               <>
+              <input
+              minLength={8}
+              className="login-input"
+              name="password"
+              type="password"
+              placeholder="Confirm Password"
+              value={passwordConfirmation}
+              onChange={(event) => {
+                setPasswordConfirmation(event.target.value);
+              }}
+              required
+            ></input>
                 <input
                   className="login-input"
                   name="name"
