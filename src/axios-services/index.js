@@ -58,8 +58,6 @@ export async function registerNewUser({ username, password, name }) {
         headers: { "Content-Type": "application/json" },
       }
     );
-    document.getElementById("myForm").style.display = "none";
-    document.getElementById("background").style.display = "none";
     return data;
   } catch (error) {
     console.log(error);
@@ -78,8 +76,6 @@ export async function userLogin({ username, password }) {
         headers: { "Content-Type": "application/json" },
       }
     );
-    document.getElementById("myForm").style.display = "none";
-    document.getElementById("background").style.display = "none";
     return data;
   } catch (error) {
     console.log(error);
@@ -261,6 +257,19 @@ export async function createParrot(squawkId, token) {
 export async function unparrot(squawkId, token) {
   try {
     await axios.delete(baseurl + `squawks/${squawkId}/parrot`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteSquawk(squawkId, token) {
+  try {
+    await axios.delete(baseurl + `squawks/${squawkId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

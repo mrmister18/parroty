@@ -28,6 +28,7 @@ const Sidenav = ({
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
   const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate();
 
   function closeForm() {
@@ -42,17 +43,29 @@ const Sidenav = ({
 
   async function loggingIn() {
     const data = await userLogin({ username, password });
-    setToken(data.token);
-    const userProfile = await getUser(data.token);
-    setUser(userProfile);
+    if (!data.token) {setErrorMessage(data.message)}
+    else {
+      setToken(data.token);
+      const userProfile = await getUser(data.token);
+      setUser(userProfile);
+      document.getElementById("myForm").style.display = "none";
+    document.getElementById("background").style.display = "none";
+      setUsername("");
+      setPassword("");}
   }
 
   async function registeringUser() {
+    if (password !== passwordConfirmation) {return}
     const data = await registerNewUser({ username, password, name });
-    console.log(data);
+    if (!data.token) {setErrorMessage(data.message)}
+    else {
     setToken(data.token);
     const userProfile = await getUser(data.token);
     setUser(userProfile);
+    document.getElementById("myForm").style.display = "none";
+    document.getElementById("background").style.display = "none";
+    setUsername("");
+    setPassword("");}
   }
   return (
     <>
@@ -246,6 +259,7 @@ const Sidenav = ({
             <div className="squawk-form-top">
               <img className="post__avatar" src={user?.profilePicture} alt="" />
               <input
+              maxLength={281}
                 value={squawkContent}
                 className="squawk-input"
                 placeholder="What's happening?"
@@ -256,7 +270,6 @@ const Sidenav = ({
             <div className="squawk-controls">
               <label className="squawk-file">
                 <input
-                maxLength={281}
                   name="squawkPicture"
                   type="file"
                   accept="image/*"
@@ -329,8 +342,8 @@ const Sidenav = ({
               }}
               required
             ></input>
+            {errorMessage ? <div style={{color:"red"}}>{errorMessage}</div> : null}
             <input
-            minLength={8}
               className="login-input"
               name="password"
               type="password"
@@ -341,6 +354,7 @@ const Sidenav = ({
               }}
               required
             ></input>
+            {password.length >= 8 || password.length === 0 || !registering ? null : <div style={{color: "red"}}>Password must be at least 8 characters!</div>}
             {registering ? (
               <>
               <input
@@ -355,6 +369,7 @@ const Sidenav = ({
               }}
               required
             ></input>
+            {password === passwordConfirmation ? null : <div style={{color: "red"}}>Passwords must match!</div>}
                 <input
                   className="login-input"
                   name="name"
@@ -374,8 +389,6 @@ const Sidenav = ({
                   onClick={(event) => {
                     event.preventDefault();
                     registering ? registeringUser() : loggingIn();
-                    setUsername("");
-                    setPassword("");
                   }}
                 >
                   Register
@@ -386,6 +399,9 @@ const Sidenav = ({
                     class="pop-switch"
                     onClick={() => {
                       setRegistering(false);
+                      setUsername("");
+                      setPassword("");
+                      setErrorMessage("")
                     }}
                   >
                     Login Here!
@@ -399,8 +415,6 @@ const Sidenav = ({
                   onClick={(event) => {
                     event.preventDefault();
                     registering ? registeringUser() : loggingIn();
-                    setUsername("");
-                    setPassword("");
                   }}
                 >
                   Login
@@ -411,6 +425,11 @@ const Sidenav = ({
                     className="pop-switch"
                     onClick={() => {
                       setRegistering(true);
+                      setUsername("");
+                      setPassword("");
+                      setErrorMessage("")
+                      setPasswordConfirmation("")
+                      setName("")
                     }}
                   >
                     Register Here!
