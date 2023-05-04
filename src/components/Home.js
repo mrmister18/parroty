@@ -348,7 +348,7 @@ const Home = ({
                 </div>
               </div>
               <div className="delete">
-                {squawk.author.userId === user.id ? (
+                {squawk.author.userId === user.id || user.admin ? (
                   <svg
                     className="delete-icon"
                     viewBox="-4 -3 33 33"

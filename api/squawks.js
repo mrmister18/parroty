@@ -121,7 +121,7 @@ apiRouter.delete("/:squawkId", requireUser, async (req, res, next) => {
     const userId = req.user.id;
     const { squawkId } = req.params;
     const squawk = await getSquawkById(squawkId);
-    if (squawk.userId === userId) {
+    if (squawk.userId === userId || requireUser.user.admin) {
       await deleteSquawk({ userId, squawkId });
       res.send({ message: "Squawk deleted successfully" });
     } else {

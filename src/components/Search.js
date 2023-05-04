@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks, getUsers, createLike, unlike, createParrot, unparrot, follow, unfollow } from "../axios-services";
+import { getSquawks, getUsers, createLike, unlike, createParrot, unparrot, follow, unfollow, deleteSquawk } from "../axios-services";
 import { useNavigate, useParams } from "react-router-dom";
 const timeAgo = require("node-time-ago");
 
@@ -311,7 +311,7 @@ const Search = ({ squawks, setSquawks, users, setUsers, user, token, setUser }) 
                         </div>
                 </div>
                 <div className="delete">
-                {squawk.author.userId === user.id ? (
+                {squawk.author.userId === user.id || user.admin ? (
                   <svg
                     className="delete-icon"
                     viewBox="-4 -3 33 33"

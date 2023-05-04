@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks, createLike, unlike, createParrot, unparrot } from "../axios-services";
+import { getSquawks, createLike, unlike, createParrot, unparrot, deleteSquawk } from "../axios-services";
 import { useNavigate } from "react-router-dom";
 const timeAgo = require("node-time-ago");
 
@@ -242,7 +242,7 @@ setActiveNav("Explore")
                 </div>
               </div>
               <div className="delete">
-                {squawk.author.userId === user.id ? (
+                {squawk.author.userId === user.id || user.admin ? (
                   <svg
                     className="delete-icon"
                     viewBox="-4 -3 33 33"

@@ -149,7 +149,7 @@ apiRouter.patch('/:userId', requireUser, async (req, res, next) => {
       const { id } = req.user
       const { userId } = req.params
       const user = await getUserById(userId)
-      if (user.id === id) {
+      if (user.id === id || req.user.admin) {
       const updatedUser = await updateUser({id: userId, ...req.body})
       delete updatedUser.password
       updatedUser.followers = await getFollowersById(userId);
