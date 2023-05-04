@@ -87,7 +87,7 @@ const Sidenav = ({
                   )}
                 </g>
               </svg>
-              <div>Home</div>
+              <div className="sidebar-title">Home</div>
             </div>
           )}
           <div
@@ -105,7 +105,7 @@ const Sidenav = ({
                 )}
               </g>
             </svg>
-            <div>Explore</div>
+            <div className="sidebar-title">Explore</div>
           </div>
           {token && (
             <div
@@ -123,7 +123,7 @@ const Sidenav = ({
                   )}
                 </g>
               </svg>
-              <div>Messages</div>
+              <div className="sidebar-title">Messages</div>
             </div>
           )}
           {user.username && (
@@ -142,7 +142,7 @@ const Sidenav = ({
                   )}
                 </g>
               </svg>
-              <div>Profile</div>
+              <div className="sidebar-title">Profile</div>
             </div>
           )}
           {token ? (
@@ -166,7 +166,7 @@ const Sidenav = ({
                     <path d="M19 17c-.3 0-.5-.1-.7-.3-.4-.4-.4-1 0-1.4l4-4c.4-.4 1-.4 1.4 0s.4 1 0 1.4l-4 4c-.2.2-.4.3-.7.3z"></path>
                   </g>
                 </svg>
-                <div>Logout</div>
+                <div className="sidebar-title">Logout</div>
               </div>
               <div
                 onClick={() => {

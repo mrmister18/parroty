@@ -60,8 +60,8 @@ apiRouter.post("/me", requireUser, async (req, res, next) => {
 
 apiRouter.post("/register", async (req, res, next) => {
   try {
-    const { username, password, name, bio, profilePicture } = req.body;
-    const fields = { bio, profilePicture }
+    const { username, password, name, bio } = req.body;
+    const fields = { bio }
     if (await getUserByUsername(username)) {
       throw Error("This username already exists");
     }
