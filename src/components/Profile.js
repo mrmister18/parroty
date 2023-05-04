@@ -108,7 +108,8 @@ const Profile = ({
                 src={`${profile.profilePicture}`}
               ></img>
               {user.username === username ? (
-                <div className="profile-button" onClick={openForm}>
+                <div className="profile-button" onClick={openForm}
+                style={{backgroundColor: "white", border:"1px rgb(207, 217, 222) solid", color:"black"}}>
                   Edit Profile
                 </div>
               ) : (
@@ -140,6 +141,7 @@ const Profile = ({
                         );
                         setUser(userCopy);
                       }}
+                      style={{backgroundColor: "white", border:"1px rgb(207, 217, 222) solid", color:"black"}}
                     >
                       Following
                     </span>

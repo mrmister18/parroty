@@ -152,6 +152,7 @@ const App = () => {
                 setSquawks={setSquawks}
                 user={user}
                 token={token}
+                setUser={setUser}
               />
             }
           ></Route>

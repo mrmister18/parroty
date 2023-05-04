@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getSquawks, getUsers, createLike, unlike, createParrot, unparrot } from "../axios-services";
+import { getSquawks, getUsers, createLike, unlike, createParrot, unparrot, follow, unfollow } from "../axios-services";
 import { useNavigate, useParams } from "react-router-dom";
 const timeAgo = require("node-time-ago");
 
-const Search = ({ squawks, setSquawks, users, setUsers, user, token }) => {
+const Search = ({ squawks, setSquawks, users, setUsers, user, token, setUser }) => {
   const navigate = useNavigate();
   const [squawkSearch, setSquawkSearch] = useState(true);
   const { searchTerm } = useParams();
   const [searchText, setSearchText] = useState(searchTerm);
+  let userCopy = {...user}
 
   useEffect(() => {
     const getParrotySquawks = async () => {
@@ -351,13 +352,45 @@ const Search = ({ squawks, setSquawks, users, setUsers, user, token }) => {
               onClick={() => {
                 navigate(`/${user.username}`);
               }}
+              style={{display: "flex", justifyContent: "space-between"}}
             >
-                <img className="post__avatar" src={user?.profilePicture} alt="" />
+                <div style={{display:"flex"}}><img className="post__avatar" src={user?.profilePicture} alt="" />
               <div className="user-info">
                 <strong>{user.name}</strong>{" "}
                 <div className="username-result">@{user.username}</div>
                 <div>{user.bio}</div>
-              </div>
+              </div></div>
+              {userCopy.following.find((person) => person.userId === user.id) ? <span
+                      className="profile-button"
+                      onClick={async (e) => {
+                        if (!e) var e = window.event;
+                          e.cancelBubble = true;
+                          if (e.stopPropagation) e.stopPropagation();
+                        await unfollow(user.id, token);
+                        userCopy.following.splice(
+                          userCopy?.following.findIndex(
+                            (person) => person.userId === user.id
+                          ),
+                          1
+                        );
+                        setUser(userCopy);
+                      }}
+                      style={{backgroundColor: "white", border:"1px rgb(207, 217, 222) solid", color:"black"}}
+                    >
+                      Following
+                    </span> : <span
+                      className="profile-button"
+                      onClick={async (e) => {
+                        if (!e) var e = window.event;
+                          e.cancelBubble = true;
+                          if (e.stopPropagation) e.stopPropagation();
+                        const { follower } = await follow(user.id, token);
+                        userCopy.following.push(follower);
+                        setUser(userCopy);
+                      }}
+                    >
+                      Follow
+                    </span>}
             </div>
           );
         })
