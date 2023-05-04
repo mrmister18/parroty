@@ -20,11 +20,6 @@ body {
   padding: 16px;
 }
 
-.app-container h1 {
-  color: var(--green);
-  padding: 1rem;
-}
-
 .sidenav {
   height: 100%;
   position: fixed;
@@ -66,11 +61,15 @@ body {
   height: 100%;
 }
 
-.close, .delete {
+.close, .delete, .back {
   font-size: 31px;
   cursor: pointer;
   width: 35px;
   height: 35px;
+}
+
+.back {
+  margin-right: 10px;
 }
 
 .delete-icon:hover {
@@ -79,7 +78,7 @@ body {
   border-radius: 50%;
 }
 
-.close:hover, .profile-message-button:hover {
+.close:hover, .profile-message-button:hover, .back:hover {
   background-color: rgba(15, 20, 25, 0.1);
   border-radius: 50%;
   transition: background-color 100ms ease-out;
@@ -207,7 +206,7 @@ input {
 
 .title {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .conversation-block {

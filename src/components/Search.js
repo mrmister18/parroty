@@ -43,7 +43,7 @@ const Search = ({ squawks, setSquawks, users, setUsers, user, token, setUser }) 
   }, []);
   return (
     <div className="app-container">
-      <h1>Search</h1>
+      <div style={{display:"flex", alignItems:"center"}}><span onClick={() => {navigate(-1)}} className="back"><svg width={35} height={35} viewBox="-3 -3 30 30"><path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path></svg></span><h1 className="title">Search</h1></div>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -360,7 +360,7 @@ const Search = ({ squawks, setSquawks, users, setUsers, user, token, setUser }) 
                 <div className="username-result">@{user.username}</div>
                 <div>{user.bio}</div>
               </div></div>
-              {userCopy.following.find((person) => person.userId === user.id) ? <span
+              {userCopy.id && userCopy.following.find((person) => person.userId === user.id) ? <span
                       className="profile-button"
                       onClick={async (e) => {
                         if (!e) var e = window.event;
@@ -384,9 +384,16 @@ const Search = ({ squawks, setSquawks, users, setUsers, user, token, setUser }) 
                         if (!e) var e = window.event;
                           e.cancelBubble = true;
                           if (e.stopPropagation) e.stopPropagation();
+                          if (!token) {
+                            document.getElementById("myForm").style.display =
+                              "flex";
+                            document.getElementById(
+                              "background"
+                            ).style.display = "flex";
+                          } else {
                         const { follower } = await follow(user.id, token);
                         userCopy.following.push(follower);
-                        setUser(userCopy);
+                        setUser(userCopy);}
                       }}
                     >
                       Follow

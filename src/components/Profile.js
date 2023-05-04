@@ -48,7 +48,14 @@ const Profile = ({
   }
 
   function messageUser() {
-    let messageRecipient = user.messages.find(
+    if (!token) {
+      document.getElementById("myForm").style.display =
+        "flex";
+      document.getElementById(
+        "background"
+      ).style.display = "flex";
+    } else
+    {let messageRecipient = user.messages.find(
       (message) => message.username === username
     );
     if (messageRecipient) {
@@ -64,7 +71,7 @@ const Profile = ({
       });
       setConversation([]);
     }
-    navigate("/messages");
+    navigate("/messages");}
   }
 
   useEffect(() => {
@@ -102,6 +109,7 @@ const Profile = ({
       {profile.id ? (
         <>
           <div>
+          <div style={{display:"flex", alignItems:"center"}}><span onClick={() => {navigate(-1)}} className="back"><svg width={35} height={35} viewBox="-3 -3 30 30"><path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path></svg></span><h1 className="title">{profile.name}</h1></div>
             <div className="profile-head">
               <img
                 className="profile-page-picture"
@@ -149,10 +157,17 @@ const Profile = ({
                     <span
                       className="profile-button"
                       onClick={async () => {
-                        const { follower } = await follow(profile.id, token);
+                        if (!token) {
+                          document.getElementById("myForm").style.display =
+                            "flex";
+                          document.getElementById(
+                            "background"
+                          ).style.display = "flex";
+                        } else 
+                        {const { follower } = await follow(profile.id, token);
                         let userCopy = { ...user };
                         userCopy.following.push(follower);
-                        setUser(userCopy);
+                        setUser(userCopy);}
                       }}
                     >
                       Follow

@@ -19,7 +19,7 @@ const Squawk = ({ token, user }) => {
     fetchSquawk();
   }, []);
   return (<div className="squawk-page">
-  <h1 className="title">Squawk</h1>
+  <div style={{display:"flex", alignItems:"center"}}><span onClick={() => {navigate(-1)}} className="back"><svg width={35} height={35} viewBox="-3 -3 30 30"><path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path></svg></span><h1 className="title">Squawk</h1></div>
     {squawk?.id && squawk.author.username === username ? <div key={`${squawk.id}`}>
         <img className="post__avatar" src={squawk.author?.profilePicture} alt="" />
 
