@@ -5,7 +5,7 @@ const { Client } = require('pg');
 const DB_NAME = 'parroty';
 
 const DB_URL =
-  process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
+"postgres://mrmister18:5MOalYjXABggxxXeTnGQ8pIgcu87NpM1@dpg-cha2ik3hp8u791kf9g6g-a/parroty" || `postgres://localhost:5432/${DB_NAME}`;
 
 let client;
 
