@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseurl = "https://parroty.onrender.com/";
+const baseurl = "https://parroty.onrender.com/api/";
 
 // this file holds your frontend network request adapters
 // think about each function as a service that provides data
